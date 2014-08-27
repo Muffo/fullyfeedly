@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "fullyfeedly",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Display the full content of articles in Feedly",
+    "description": "The description of the application"
+  }
+}
