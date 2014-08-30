@@ -43,8 +43,23 @@ function fetchPageContent(callback) {
  *
  * @param data Object JSON decoded response.  Null if the request failed.
  */
-function onArticleExtracted(content) {
-    console.log(content);
+function onArticleExtracted(data) {
+    
+    if (data.status && data.status === 'success')
+    {
+        var articleContent = data.response.content;
+
+        var contentElements = document.getElementsByClassName('content');
+        if (contentElements.length === 0) {
+            console.log('There is something wrong: no link element found');
+        }
+        if (contentElements.length > 1) {
+            console.log('There is something wrong: more than one link element found');
+        }
+
+        contentElements[0].innerText = articleContent;
+        console.log(articleContent);
+    }
 }
 
 /* Listen for messages */
