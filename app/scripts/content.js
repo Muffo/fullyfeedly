@@ -20,15 +20,12 @@ function fetchPageContent(callback) {
         }
     };
 
-    var linkElements = document.getElementsByClassName('websiteCallForAction');
-    if (linkElements.length === 0) {
+    var linkElement = document.querySelector('.websiteCallForAction');
+    if (linkElement === null) {
         console.log('There is something wrong: no link element found');
     }
-    if (linkElements.length > 1) {
-        console.log('There is something wrong: more than one link element found');
-    }
 
-    var pageUrl = linkElements[0].getAttribute('href');
+    var pageUrl = linkElement.getAttribute('href');
     var encodedPageUrl = encodeURIComponent(pageUrl);
 
     // Note that any URL fetched here must be matched by a permission in
@@ -39,27 +36,32 @@ function fetchPageContent(callback) {
 }
 
 /**
- * Parses text from 
+ * Process the content of the article and add it to the page 
  *
  * @param data Object JSON decoded response.  Null if the request failed.
  */
 function onArticleExtracted(data) {
     
-    if (data.status && data.status === 'success')
-    {
-        var articleContent = data.response.content;
-
-        var contentElements = document.getElementsByClassName('content');
-        if (contentElements.length === 0) {
-            console.log('There is something wrong: no link element found');
-        }
-        if (contentElements.length > 1) {
-            console.log('There is something wrong: more than one link element found');
-        }
-
-        contentElements[0].innerText = articleContent;
-        console.log(articleContent);
+    if (data === null) {
+        console.log('Failed to load the content of the page');
+        return;
     }
+
+    if (data.status === null || data.status !== 'success') {
+        console.log('API failed to extract the content');
+        return;
+    }
+
+    var articleContent = data.response.content;
+
+    var contentElement = document.querySelector('.content');
+    if (contentElement === null) {
+        console.log('There is something wrong: no content element found');
+    }
+
+    contentElement.innerText = articleContent;
+    // console.log(articleContent);
+    
 }
 
 /* Listen for messages */
