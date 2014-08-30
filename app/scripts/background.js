@@ -4,14 +4,15 @@ chrome.runtime.onInstalled.addListener(function (details) {
     console.log('previousVersion', details.previousVersion);
 });
 
-/* Regex-pattern to check URLs against. 
-   It matches URLs like: http[s]://[...]feedly.com[...] */
-var urlRegex = /^https?:\/\/(?:[^\.]+\.)?feedly\.com/;
 
 /* A function creator for callbacks */
 function doStuffWithDOM(domContent) {
     console.log('I received the following DOM content:\n' + domContent);
 }
+
+/* Regex-pattern to check URLs against. 
+   It matches URLs like: http[s]://[...]feedly.com[...] */
+var urlRegex = /^https?:\/\/(?:[^\.]+\.)?feedly\.com/;
 
 /* When the browser-action button is clicked... */
 chrome.pageAction.onClicked.addListener(function(tab) {
@@ -22,15 +23,24 @@ chrome.pageAction.onClicked.addListener(function(tab) {
     }
 });
 
-chrome.tabs.onUpdated.addListener(function (tabId, tabChange, tab) {
-    console.log(tab);
-    console.log(tab.url);
-    if (!urlRegex.test(tab.url)) {
-        chrome.pageAction.hide(tabId);
-        return;
-    }
-    
-    chrome.pageAction.show(tabId);
+// When the extension is installed or upgraded ...
+chrome.runtime.onInstalled.addListener(function() {
+    // Replace all rules ...
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+        // With a new rule ...
+        chrome.declarativeContent.onPageChanged.addRules([
+            {
+                // That fires when a page's URL contains a 'g' ...
+                conditions: [
+                    new chrome.declarativeContent.PageStateMatcher({
+                        pageUrl: { urlContains: 'feedly.com' },
+                    })
+                ],
+                // And shows the extension's page action.
+                actions: [ new chrome.declarativeContent.ShowPageAction() ]
+            }
+        ]);
+    });
 });
 
 console.log('\'Allo \'Allo! Event Page for Page Action');

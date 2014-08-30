@@ -12,7 +12,8 @@
         "scripts": [
             "scripts/chromereload.js",
             "scripts/background.js"
-        ]
+        ],
+        "persistent": false
     },
   "page_action": {
     "default_icon": {
@@ -29,7 +30,7 @@
     }
   ],
   "permissions": [
-    "tabs",
+    "declarativeContent",
     "activeTab"
   ],
   "options_page": "options.html"
