@@ -31,7 +31,8 @@
   ],
   "permissions": [
     "declarativeContent",
-    "activeTab"
+    "activeTab",
+    "http://boilerpipe-web.appspot.com/*"
   ],
   "options_page": "options.html"
 }
