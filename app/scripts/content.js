@@ -19,9 +19,21 @@ function fetchPageContent(callback) {
             }
         }
     };
+
+    var linkElements = document.getElementsByClassName('websiteCallForAction');
+    if (linkElements.length === 0) {
+        console.log('There is something wrong: no link element found');
+    }
+    if (linkElements.length > 1) {
+        console.log('There is something wrong: more than one link element found');
+    }
+
+    var pageUrl = linkElements[0].getAttribute('href');
+    var encodedPageUrl = encodeURIComponent(pageUrl);
+
     // Note that any URL fetched here must be matched by a permission in
     // the manifest.json file!
-    var url = 'http://boilerpipe-web.appspot.com/extract?url=http%3A%2F%2Fwww.tomshardware.com%2Freviews%2Fintel-core-i7-5960x-haswell-e-cpu%2C3918.html&extractor=ArticleExtractor&output=json&extractImages=';
+    var url = 'http://boilerpipe-web.appspot.com/extract?url=' + encodedPageUrl + '&extractor=ArticleExtractor&output=json&extractImages=';
     xhr.open('GET', url, true);
     xhr.send();
 }
