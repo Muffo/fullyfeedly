@@ -23,6 +23,7 @@ function fetchPageContent(callback) {
     var linkElement = document.querySelector('.websiteCallForAction');
     if (linkElement === null) {
         console.log('There is something wrong: no link element found');
+        return;
     }
 
     var pageUrl = linkElement.getAttribute('href');
@@ -57,10 +58,18 @@ function onArticleExtracted(data) {
     var contentElement = document.querySelector('.content');
     if (contentElement === null) {
         console.log('There is something wrong: no content element found');
+        return;
+    }
+
+    var articleImage = contentElement.querySelector('img');
+    if (articleImage !== null) {
+        articleImage = articleImage.cloneNode();
     }
 
     contentElement.innerText = articleContent;
-    // console.log(articleContent);
+    if (articleImage !== null) {
+        contentElement.insertBefore(articleImage, contentElement.firstChild);
+    }
     
 }
 
