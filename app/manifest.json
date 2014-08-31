@@ -1,6 +1,6 @@
 {
     "name": "__MSG_appName__",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "manifest_version": 2,
     "description": "__MSG_appDescription__",
     "icons": {
@@ -12,15 +12,30 @@
         "scripts": [
             "scripts/chromereload.js",
             "scripts/background.js"
-        ]
+        ],
+        "persistent": false
     },
-  "page_action": {
-    "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+    "page_action": {
+        "default_icon": {
+            "19": "images/icon-19.png",
+            "38": "images/icon-38.png"
+        },
+        "default_title": "fullyfeedly"
     },
-    "default_title": "fullyfeedly",
-    "default_popup": "popup.html"
-  },
-  "options_page": "options.html"
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.feedly.com/*"
+            ],
+            "js": [
+                "scripts/content.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "declarativeContent",
+        "activeTab",
+        "http://boilerpipe-web.appspot.com/*"
+    ],
+    "options_page": "options.html"
 }
