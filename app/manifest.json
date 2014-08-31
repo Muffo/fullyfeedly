@@ -21,7 +21,6 @@
       "38": "images/icon-38.png"
     },
     "default_title": "fullyfeedly"
-    // "default_popup": "popup.html"
   },
   "content_scripts": [
     {

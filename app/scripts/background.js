@@ -1,25 +1,24 @@
 'use strict';
 
 chrome.runtime.onInstalled.addListener(function (details) {
-    console.log('previousVersion', details.previousVersion);
+    console.log('FullyFeedly installed: previousVersion', details.previousVersion);
 });
 
 
-/* A function creator for callbacks */
-function doStuffWithDOM(domContent) {
-    console.log('I received the following DOM content:\n' + domContent);
+function printResponse(response) {
+    console.log('Content response:\n' + response);
 }
 
 /* Regex-pattern to check URLs against. 
    It matches URLs like: http[s]://[...]feedly.com[...] */
 var urlRegex = /^https?:\/\/(?:[^\.]+\.)?feedly\.com/;
 
-/* When the browser-action button is clicked... */
+// When the browser-action button is clicked...
 chrome.pageAction.onClicked.addListener(function(tab) {
-    /*...check the URL of the active tab against our pattern and... */
+    // ...check the URL of the active tab against our pattern and...
     if (urlRegex.test(tab.url)) {
-        /* ...if it matches, send a message specifying a callback too */
-        chrome.tabs.sendMessage(tab.id, { text: 'report_back' }, doStuffWithDOM);
+        // ...if it matches, send a message specifying a callback too 
+        chrome.tabs.sendMessage(tab.id, { text: 'extract_article' }, printResponse);
     }
 });
 
@@ -30,7 +29,7 @@ chrome.runtime.onInstalled.addListener(function() {
         // With a new rule ...
         chrome.declarativeContent.onPageChanged.addRules([
             {
-                // That fires when a page's URL contains a 'g' ...
+                // That fires when a page's URL contains a 'feedly.com' ...
                 conditions: [
                     new chrome.declarativeContent.PageStateMatcher({
                         pageUrl: { urlContains: 'feedly.com' },
@@ -43,4 +42,4 @@ chrome.runtime.onInstalled.addListener(function() {
     });
 });
 
-console.log('\'Allo \'Allo! Event Page for Page Action');
+console.log('FullyFeedly: extension started');
