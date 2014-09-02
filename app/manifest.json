@@ -28,7 +28,12 @@
                 "*://*.feedly.com/*"
             ],
             "js": [
+                "libs/spinjs/spin.js",
+                "libs/iosOverlay/iosOverlay.js",
                 "scripts/content.js"
+            ],
+            "css": [
+                "libs/iosOverlay/iosOverlay.css"
             ]
         }
     ],
