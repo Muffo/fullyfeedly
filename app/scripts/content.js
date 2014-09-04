@@ -1,3 +1,6 @@
+/*global Spinner:false, iosOverlay:false */
+
+
 'use strict';
 
 /**
@@ -8,22 +11,16 @@
  *     response.  Otherwise, this function is called with null.
  */
 function fetchPageContent(callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                var data = JSON.parse(xhr.responseText);
-                callback(data);
-            } else {
-                callback(null);
-            }
-        }
-    };
 
     // Search the link of the article that is currently opened
     var linkElement = document.querySelector('.websiteCallForAction');
     if (linkElement === null) {
-        console.log('There is something wrong: no link element found');
+        console.log('[FullyFeedly] Link to article not found');
+        iosOverlay({
+            text: 'Article not found',
+            duration: 2e3,
+            icon: chrome.extension.getURL('images/cross.png')
+        });
         return;
     }
 
@@ -35,6 +32,61 @@ function fetchPageContent(callback) {
     var url = 'http://boilerpipe-web.appspot.com/extract?url=' +
                 encodedPageUrl +
                 '&extractor=ArticleExtractor&output=json&extractImages=';
+	
+    // Spienner options
+    var spinOpts = {
+		lines: 13,  // The number of lines to draw
+		length: 11, // The length of each line
+		width: 5,   // The line thickness
+		radius: 17, // The radius of the inner circle
+		corners: 1, // Corner roundness (0..1)
+		rotate: 0,  // The rotation offset
+		color: '#FFF', // #rgb or #rrggbb
+		speed: 1,   // Rounds per second
+		trail: 60,  // Afterglow percentage
+		shadow: false, // Whether to render a shadow
+		hwaccel: false, // Whether to use hardware acceleration
+		className: 'spinner', // The CSS class to assign to the spinner
+		zIndex: 2e9, // The z-index (defaults to 2000000000)
+		top: 'auto', // Top position relative to parent in px
+		left: 'auto' // Left position relative to parent in px
+	};
+    
+    // Create the spinner and the overlay
+	var target = document.createElement('div');
+	document.body.appendChild(target);
+	var spinner = new Spinner(spinOpts).spin(target);
+    var overlay = iosOverlay({
+        text: 'Loading',
+        duration: 2e3,
+        spinner: spinner
+    });
+   
+    // Create the asynch HTTP request 
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                var data = JSON.parse(xhr.responseText);
+                callback(data, overlay);
+            } else if (xhr.status === 503) {
+                console.log('[FullyFeedly] Boilerpipe API exceeded quota');
+                overlay.update({
+                    text: 'API over quota',
+                    duration: 3e3,
+                    icon: chrome.extension.getURL('images/cross.png')
+                });
+            } else {
+                console.log('[FullyFeedly] Failed to load the content of the page');
+                overlay.update({
+                    text: 'Article not loaded',
+                    duration: 3e3,
+                    icon: chrome.extension.getURL('images/cross.png')
+                });
+            }
+        }
+    };
     xhr.open('GET', url, true);
     xhr.send();
 }
@@ -44,17 +96,16 @@ function fetchPageContent(callback) {
  *
  * @param data Object JSON decoded response.  Null if the request failed.
  */
-function onArticleExtracted(data) {
-   
-    // Check if the request failed 
-    if (data === null) {
-        console.log('Failed to load the content of the page');
-        return;
-    }
+function onArticleExtracted(data, overlay) {
     
     // Check if the API failed to extract the text
     if (data.status === null || data.status !== 'success') {
-        console.log('API failed to extract the content');
+        console.log('[FullyFeedly] API failed to extract the content');
+        overlay.update({
+            text: 'Article not loaded',
+            duration: 3e3,
+            icon: chrome.extension.getURL('images/cross.png')
+        });
         return;
     }
 
@@ -64,7 +115,12 @@ function onArticleExtracted(data) {
     // Search the element of the page that will containt the text
     var contentElement = document.querySelector('.content');
     if (contentElement === null) {
-        console.log('There is something wrong: no content element found');
+        console.log('[FullyFeedly] There is something wrong: no content element found');
+        overlay.update({
+            text: 'No content',
+            duration: 3e3,
+            icon: chrome.extension.getURL('images/cross.png')
+        });
         return;
     }
     
@@ -82,6 +138,11 @@ function onArticleExtracted(data) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
     
+    overlay.update({
+        text: 'Done',
+        duration: 3e3,
+        icon: chrome.extension.getURL('images/check.png')
+    });
 }
 
 /* Listen for requests */
