@@ -37,6 +37,10 @@
             ]
         }
     ],
+    "web_accessible_resources": [
+        "images/cross.png",
+        "images/check.png"
+    ],
     "permissions": [
         "declarativeContent",
         "activeTab",
