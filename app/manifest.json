@@ -1,6 +1,6 @@
 {
     "name": "__MSG_appName__",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "manifest_version": 2,
     "description": "__MSG_appDescription__",
     "icons": {
@@ -28,14 +28,25 @@
                 "*://*.feedly.com/*"
             ],
             "js": [
+                "libs/spinjs/spin.js",
+                "libs/iosOverlay/iosOverlay.js",
                 "scripts/content.js"
+            ],
+            "css": [
+                "libs/iosOverlay/iosOverlay.css"
             ]
         }
+    ],
+    "web_accessible_resources": [
+        "images/cross.png",
+        "images/check.png"
     ],
     "permissions": [
         "declarativeContent",
         "activeTab",
-        "http://boilerpipe-web.appspot.com/*"
+        "storage",
+        "http://boilerpipe-web.appspot.com/*",
+        "http://www.readability.com/api/*"
     ],
     "options_page": "options.html"
 }
