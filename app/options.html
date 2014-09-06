@@ -25,20 +25,19 @@
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="extractionAPI">Article extraction API</label>
-                                <select class="form-control input-lg" id="extractionAPI">
-                                <option>Boilerpipe API1</option>
-                                <option>Readability API</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="readabilityAPIKey">Readability API key</label>
-                            <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </form>
+                    <div class="form-group">
+                        <label for="extractionAPI">Article extraction API</label>
+                            <select class="form-control input-lg" id="extractionAPI">
+                            <option>Boilerpipe</option>
+                            <option>Readability</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="readabilityAPIKey">Readability API key</label>
+                        <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
+                    </div>
+                    <button class="btn btn-primary" id="save">Save</button>
+                    <span id="status"></span>
                 </div>
             </div>
             <div class="row">
