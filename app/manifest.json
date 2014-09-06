@@ -45,7 +45,8 @@
         "declarativeContent",
         "activeTab",
         "storage",
-        "http://boilerpipe-web.appspot.com/*"
+        "http://boilerpipe-web.appspot.com/*",
+        "http://www.readability.com/api/*"
     ],
     "options_page": "options.html"
 }
