@@ -3,87 +3,27 @@
 
 'use strict';
 
-/**
- * Process the content of the article and add it to the page 
- *
- * @param data Object JSON decoded response.  Null if the request failed.
- */
-function onArticleExtracted(data, overlay) {
-    
-    // Check if the API failed to extract the text
-    if (data.status === null || data.status !== 'success') {
-        console.log('[FullyFeedly] API failed to extract the content');
-        overlay.update({
-            text: 'Article not loaded',
-            duration: 3e3,
-            icon: chrome.extension.getURL('images/cross.png')
-        });
-        return;
-    }
+/* ===================== Options ===================== */
+var options = {
+    extractionAPI: 'Boilerpipe',
+    readabilityAPIKey: ''
+};
 
-    // Get the content of the article
-    var articleContent = data.response.content;
-
-    // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
-    if (contentElement === null) {
-        console.log('[FullyFeedly] There is something wrong: no content element found');
-        overlay.update({
-            text: 'No content',
-            duration: 3e3,
-            icon: chrome.extension.getURL('images/cross.png')
-        });
-        return;
-    }
-    
-    // If there is an image we want to keep it
-    var articleImage = contentElement.querySelector('img');
-    if (articleImage !== null) {
-        articleImage = articleImage.cloneNode();
-    }
-
-    // Replace the preview of the article with the full text
-    contentElement.innerText = articleContent;
-
-    // Put the image back at the beginning of the article
-    if (articleImage !== null) {
-        contentElement.insertBefore(articleImage, contentElement.firstChild);
-    }
-    
-    overlay.update({
-        text: 'Done',
-        duration: 3e3,
-        icon: chrome.extension.getURL('images/check.png')
+// Restores the options using the preferences stored in chrome.storage.
+(function restoreOptions() {
+    chrome.storage.sync.get({
+        extractionAPI: 'Boilerpipe',
+        readabilityAPIKey: ''
+    }, function(items) {
+        options = items;
+        console.log('[FullyFeedly] Loaded options: ', options);
     });
-}
+})();
 
-function boilerpipeRequest(xhr, overlay) {
-    return function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // Operation succeded
-                var data = JSON.parse(xhr.responseText);
-                onArticleExtracted(data, overlay);
-            } else if (xhr.status === 503) {
-                console.log('[FullyFeedly] Boilerpipe API exceeded quota');
-                overlay.update({
-                    text: 'API over quota',
-                    duration: 3e3,
-                    icon: chrome.extension.getURL('images/cross.png')
-                });
-            } else {
-                console.log('[FullyFeedly] Failed to load the content of the page');
-                overlay.update({
-                    text: 'Article not loaded',
-                    duration: 3e3,
-                    icon: chrome.extension.getURL('images/cross.png')
-                });
-            }
-        }
-    };
-}
 
-function createLoadingOverlay() {
+
+/* ===================== Notifications ===================== */
+function loadingOverlay() {
 
     // Spinner options
     var spinOpts = {
@@ -110,12 +50,100 @@ function createLoadingOverlay() {
 	var spinner = new Spinner(spinOpts).spin(target);
     var overlay = iosOverlay({
         text: 'Loading',
-        duration: 2e3,
         spinner: spinner
     });
 
     return overlay;
 }
+
+function genericOverlay(message, icon, duration, overlay) {
+
+    if (overlay === undefined || overlay === null) {
+        overlay = iosOverlay({
+            text: message,
+            icon: icon
+        });
+    }
+    else {
+        overlay.update({
+            text: message,
+            icon: icon
+        });
+    }
+    window.setTimeout(function() {
+        overlay.hide();
+    }, duration);
+
+}
+
+function successOverlay(message, overlay) {
+    genericOverlay(message, chrome.extension.getURL('images/check.png'), 1e3, overlay);
+}
+
+function failOverlay(message, overlay) {
+    genericOverlay(message, chrome.extension.getURL('images/cross.png'), 2e3, overlay);
+}
+
+/**
+ * Process the content of the article and add it to the page 
+ *
+ * @param data Object JSON decoded response.  Null if the request failed.
+ */
+function onArticleExtracted(data, overlay) {
+    
+    // Check if the API failed to extract the text
+    if (data.status === null || data.status !== 'success') {
+        console.log('[FullyFeedly] API failed to extract the content');
+        failOverlay('Article not loaded', overlay);
+        return;
+    }
+
+    // Get the content of the article
+    var articleContent = data.response.content;
+
+    // Search the element of the page that will containt the text
+    var contentElement = document.querySelector('.content');
+    if (contentElement === null) {
+        console.log('[FullyFeedly] There is something wrong: no content element found');
+        failOverlay('No content', overlay);
+        return;
+    }
+    
+    // If there is an image we want to keep it
+    var articleImage = contentElement.querySelector('img');
+    if (articleImage !== null) {
+        articleImage = articleImage.cloneNode();
+    }
+
+    // Replace the preview of the article with the full text
+    contentElement.innerText = articleContent;
+
+    // Put the image back at the beginning of the article
+    if (articleImage !== null) {
+        contentElement.insertBefore(articleImage, contentElement.firstChild);
+    }
+    
+    successOverlay('Done', overlay);
+}
+
+function boilerpipeRequest(xhr, overlay) {
+    return function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                var data = JSON.parse(xhr.responseText);
+                onArticleExtracted(data, overlay);
+            } else if (xhr.status === 503) {
+                console.log('[FullyFeedly] Boilerpipe API exceeded quota');
+                failOverlay('API over quota', overlay);
+            } else {
+                console.log('[FullyFeedly] Failed to load the content of the page');
+                failOverlay('Article not found', overlay);
+            }
+        }
+    };
+}
+
 
 /**
  * Performs an XMLHttpRequest to boilerpipe to get the content of the artile.
@@ -130,11 +158,7 @@ function fetchPageContent() {
     var linkElement = document.querySelector('.websiteCallForAction');
     if (linkElement === null) {
         console.log('[FullyFeedly] Link to article not found');
-        iosOverlay({
-            text: 'Article not found',
-            duration: 2e3,
-            icon: chrome.extension.getURL('images/cross.png')
-        });
+        failOverlay('Article not found');
         return;
     }
 
@@ -147,7 +171,7 @@ function fetchPageContent() {
                 encodedPageUrl +
                 '&extractor=ArticleExtractor&output=json&extractImages=';
 
-    var overlay = createLoadingOverlay();
+    var overlay = loadingOverlay();
    
     // Create the asynch HTTP request 
     var xhr = new XMLHttpRequest();
@@ -155,7 +179,6 @@ function fetchPageContent() {
     xhr.open('GET', url, true);
     xhr.send();
 }
-
 
 
 /* Listen for requests */
