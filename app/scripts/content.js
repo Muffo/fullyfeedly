@@ -171,9 +171,20 @@ function onReadabilityArticleExtracted(data, overlay) {
         return;
     }
     
+    // If there is an image we want to keep it
+    var articleImage = contentElement.querySelector('img');
+    if (articleImage !== null) {
+        articleImage = articleImage.cloneNode();
+    }
+
     // Replace the preview of the article with the full text
     contentElement.innerHTML = articleContent;
     successOverlay('Done', overlay);
+
+    // Put the image back at the beginning of the article
+    if (articleImage !== null && contentElement.querySelector('img') === null) {
+        contentElement.insertBefore(articleImage, contentElement.firstChild);
+    }
 }
 
 function readabilityRequest(xhr, overlay) {
