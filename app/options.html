@@ -3,17 +3,56 @@
     <head>
         <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
         <!-- endbower -->
         <!-- endbuild -->
         <!-- build:css styles/main.css -->
         <link href="styles/main.css" rel="stylesheet">
         <!-- endbuild -->
+        <title>FullyFeedly - Options</title>
     </head>
+
     <body>
-        <h1>'Allo, 'Allo!</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="jumbotron">
+                        <img src="images/icon-128.png" class="pull-right"/>
+                        <h1>FullyFeedly</h1>
+                        <p>Extract the full content of the articles in Feedly.com</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="extractionAPI">Article extraction API</label>
+                                <select class="form-control input-lg" id="extractionAPI">
+                                <option>Boilerpipe API1</option>
+                                <option>Readability API</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="readabilityAPIKey">Readability API key</label>
+                            <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <hr/>
+                    <p style="text-align: right">Developed by Andrea Grandi</p>
+                </div>
+            </div>
+        </div>
                 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
