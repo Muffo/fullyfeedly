@@ -84,12 +84,15 @@ function failOverlay(message, overlay) {
     genericOverlay(message, chrome.extension.getURL('images/cross.png'), 2e3, overlay);
 }
 
+
+
+/* ===================== Boilerpipe ===================== */
 /**
  * Process the content of the article and add it to the page 
  *
  * @param data Object JSON decoded response.  Null if the request failed.
  */
-function onArticleExtracted(data, overlay) {
+function onBoilerpipeArticleExtracted(data, overlay) {
     
     // Check if the API failed to extract the text
     if (data.status === null || data.status !== 'success') {
@@ -132,13 +135,66 @@ function boilerpipeRequest(xhr, overlay) {
             if (xhr.status === 200) {
                 // Operation succeded
                 var data = JSON.parse(xhr.responseText);
-                onArticleExtracted(data, overlay);
+                onBoilerpipeArticleExtracted(data, overlay);
             } else if (xhr.status === 503) {
                 console.log('[FullyFeedly] Boilerpipe API exceeded quota');
                 failOverlay('API over quota', overlay);
             } else {
                 console.log('[FullyFeedly] Failed to load the content of the page');
                 failOverlay('Article not found', overlay);
+            }
+        }
+    };
+}
+
+/* ===================== Readability ===================== */
+/**
+ * Process the content of the article and add it to the page 
+ */
+function onReadabilityArticleExtracted(data, overlay) {
+    
+    // Check if the API failed to extract the text
+    if (data.content === null) {
+        console.log('[FullyFeedly] API failed to extract the content');
+        failOverlay('Article not loaded', overlay);
+        return;
+    }
+
+    // Get the content of the article
+    var articleContent = data.content;
+
+    // Search the element of the page that will containt the text
+    var contentElement = document.querySelector('.content');
+    if (contentElement === null) {
+        console.log('[FullyFeedly] There is something wrong: no content element found');
+        failOverlay('No content', overlay);
+        return;
+    }
+    
+    // Replace the preview of the article with the full text
+    contentElement.innerHTML = articleContent;
+    successOverlay('Done', overlay);
+}
+
+function readabilityRequest(xhr, overlay) {
+    return function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                var data = JSON.parse(xhr.responseText);
+                onReadabilityArticleExtracted(data, overlay);
+            } else if (xhr.status === 400) {
+                console.log('[FullyFeedly] Readability API Bad request: ' +
+                            'The server could not understand your request. ' +
+                            'Verify that request parameters (and content, if any) are valid.');
+                failOverlay('API bad request', overlay);
+            } else if (xhr.status === 400) {
+                console.log('[FullyFeedly] Readability API Authorization Required: ' +
+                            'Authentication failed or was not provided.');
+                failOverlay('API authorization required', overlay);
+            } else {
+                console.log('[FullyFeedly] Readability API Unknown error');
+                failOverlay('API unknown error', overlay);
             }
         }
     };
@@ -162,20 +218,39 @@ function fetchPageContent() {
         return;
     }
 
+    
     // Get the link and convert it for usage as parameter in the GET request
     var pageUrl = linkElement.getAttribute('href');
     var encodedPageUrl = encodeURIComponent(pageUrl);
+    
+    // Show loading overlay
+    var overlay = loadingOverlay();
 
-    // Prepare the request to Boilerpipe
-    var url = 'http://boilerpipe-web.appspot.com/extract?url=' +
+    // Create the asynch HTTP request 
+    var xhr = new XMLHttpRequest();
+    var url = '';
+
+    if (options.extractionAPI === 'Boilerpipe') {
+        // Prepare the request to Boilerpipe
+        url = 'http://boilerpipe-web.appspot.com/extract?url=' +
                 encodedPageUrl +
                 '&extractor=ArticleExtractor&output=json&extractImages=';
 
-    var overlay = loadingOverlay();
-   
-    // Create the asynch HTTP request 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = boilerpipeRequest(xhr, overlay);
+        xhr.onreadystatechange = boilerpipeRequest(xhr, overlay);
+    }
+    else if (options.extractionAPI === 'Readability') {
+        // Check if the key is set
+        if (options.readabilityAPIKey === '') {
+            failOverlay('Missing API Key', overlay);
+            return;
+        }
+
+        // Prepare the request to Readability
+        url = 'http://www.readability.com/api/content/v1/parser?url=' +
+                encodedPageUrl + '&token=' + options.readabilityAPIKey;
+
+        xhr.onreadystatechange = readabilityRequest(xhr, overlay);
+    }
     xhr.open('GET', url, true);
     xhr.send();
 }
