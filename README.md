@@ -16,4 +16,7 @@ When reading an imcomplete post, simply press the icon of FullFeedly in the URL 
 
 Clone the repository and follow [this guide](http://minimul.com/developing-a-chrome-extension-with-yeoman.html) to build and debug the extension.
 
-The text of the article is extracted using the web API provided by [Boilerpipe](http://boilerpipe-web.appspot.com/).
+The text of the article is extracted using the web API provided by:
+
+* [Boilerpipe](http://boilerpipe-web.appspot.com/): free to use, limited quota
+* [Readability](http://www.readability.com): free for non-commmercial uses, API key required
