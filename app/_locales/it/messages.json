@@ -1,0 +1,46 @@
+{
+  "appName": {
+    "message": "FullyFeedly",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Mostra il contenuto completo degli articoli in Feedly",
+    "description": "The description of the application"
+  },
+  "articleNotLoaded": {
+  	"message": "Articolo Non Caricato",
+  	"description": "NNotification message displayed when the article is not loaded correctly"
+  },
+  "articleNotFound": {
+  	"message": "Articolo Non Trovato",
+  	"description": "Notification message displayed when the article is not found"
+  },
+  "loading": {
+  	"message": "Caricamento",
+  	"description": "Notification message displayed while loading the article"
+  },
+  "done": {
+  	"message": "Fatto",
+  	"description": "Notification message displayed when the operation is completed with success"
+  },
+  "APIOverQuota": {
+  	"message": "API Over Quota",
+  	"description": "Notification message displayed when API exceeded free usage quota"
+  },
+  "APIBadRequest": {
+  	"message": "API Bad Request",
+  	"description": "Notification message displayed when the API request format is not valid"
+  },
+  "APIAuthorizationRequired": {
+  	"message": "API Autorizzazione Richiesta",
+  	"description": "Notification message displayed when API requires authorization"
+  },
+  "APIUnknownError": {
+  	"message": "API Errore Sconosciuto",
+  	"description": "Notification message displayed when the an unknown error occurred"
+  },
+  "APIMissingKey": {
+  	"message": "Chiave API Mancante",
+  	"description": "Notification message displayed when the key for API is missing"
+  }
+}
