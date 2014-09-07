@@ -1,0 +1,29 @@
+.loadContent {
+	padding: 14px 20px 14px 20px;
+	font-size: 14px;
+	line-height: 17px;
+	font-weight: normal;
+	text-decoration: none;
+	border-radius: 3px;
+	color: #777;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	cursor: pointer;
+	z-index: 1000;
+	-webkit-font-smoothing: antialiased;
+	cursor: pointer;
+	border: 1px solid #DCDCDC;
+	background: #FFF;
+	box-shadow: none;
+	display: block;
+	margin-top: 40px;
+	clear: both;
+	text-align: center;
+	transition: background-color 0.1s linear;
+}
+
+.websiteCallForAction {
+	margin-top: 10px !important;
+}

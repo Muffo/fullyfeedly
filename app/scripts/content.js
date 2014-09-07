@@ -227,7 +227,6 @@ function fetchPageContent() {
         return;
     }
 
-    
     // Get the link and convert it for usage as parameter in the GET request
     var pageUrl = linkElement.getAttribute('href');
     var encodedPageUrl = encodeURIComponent(pageUrl);
@@ -278,29 +277,34 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 /* ================ DOM Observer =============== */
 var observeDOM = (function() {
     var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-    var eventListenerSupported = window.addEventListener;
 
     return function(obj, callback) {
-        if (MutationObserver) {
-             // define a new observer
-            var obs = new MutationObserver(function(mutations, observer) {
-                console.log(observer);
-                if (mutations[0].addedNodes.length || mutations[0].removedNodes.length) {
-                    callback(mutations);
-                }
-            });
-            // have the observer observe foo for changes in children
-            obs.observe(obj, { childList:true, subtree:true });
-        }
-        else if(eventListenerSupported) {
-            obj.addEventListener('DOMNodeInserted', callback, false);
-            obj.addEventListener('DOMNodeRemoved', callback, false);
-        }
+        // define a new observer
+        var obs = new MutationObserver(function(mutations) {
+            if (mutations[0].addedNodes.length) {
+                callback(mutations);
+            }
+        });
+        // have the observer observe foo for changes in children
+        obs.observe(obj, { childList:true, subtree:true });
     };
 })();
 
-// Observe a specific DOM element:
-observeDOM(document.getElementById('box'), function(mutations) {
+observeDOM(document.getElementById('box'), function() {
     console.log('[FullyFeedly] DOM changed');
-    console.log('[FullyFeedly] ', mutations);
+    if (document.querySelector('.loadContent') !== null) {
+        return;
+    }
+    var goButton = document.querySelector('.websiteCallForAction');
+    if (goButton !== null) {
+        console.log('[FullyFeedly] Button found: ', goButton);
+        var loadButton = goButton.cloneNode();
+        loadButton.className = 'loadContent';
+        loadButton.innerText = 'Load Full Article';
+        loadButton.removeAttribute('href');
+        loadButton.onclick = fetchPageContent;
+        var entry = document.querySelector('.u100entry');
+        entry.insertBefore(loadButton, goButton);
+        return;
+    }
 });
