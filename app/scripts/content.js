@@ -255,7 +255,7 @@ function fetchPageContent() {
         }
 
         // Prepare the request to Readability
-        url = 'http://www.readability.com/api/content/v1/parser?url=' +
+        url = 'https://www.readability.com/api/content/v1/parser?url=' +
                 encodedPageUrl + '&token=' + options.readabilityAPIKey;
 
         xhr.onreadystatechange = readabilityRequest(xhr, overlay);
