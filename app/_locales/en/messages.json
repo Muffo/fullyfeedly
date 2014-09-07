@@ -4,7 +4,7 @@
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "Display the full content of articles in Feedly",
+    "message": "Show the full content of articles in Feedly",
     "description": "The description of the application"
   },
   "articleNotLoaded": {
@@ -24,24 +24,23 @@
   	"description": "Notification message displayed when the operation is completed with success"
   },
   "APIOverQuota": {
-  	"message": "API over quota",
+  	"message": "API Over Quota",
   	"description": "Notification message displayed when API exceeded free usage quota"
   },
   "APIBadRequest": {
-  	"message": "API bad request",
+  	"message": "API Bad Request",
   	"description": "Notification message displayed when the API request format is not valid"
   },
   "APIAuthorizationRequired": {
-  	"message": "API authorization required",
+  	"message": "API Authorization Required",
   	"description": "Notification message displayed when API requires authorization"
   },
   "APIUnknownError": {
-  	"message": "API unknown error",
+  	"message": "API Unknown Error",
   	"description": "Notification message displayed when the an unknown error occurred"
   },
   "APIMissingKey": {
-  	"message": "API missing key",
+  	"message": "API Missing Key",
   	"description": "Notification message displayed when the key for API is missing"
   }
-
 }
