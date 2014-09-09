@@ -1,4 +1,4 @@
-.loadContent {
+.loadArticleBtn {
 	padding: 14px 20px 14px 20px;
 	font-size: 14px;
 	line-height: 17px;
@@ -22,6 +22,13 @@
 	clear: both;
 	text-align: center;
 	transition: background-color 0.1s linear;
+}
+
+.loadArticleBtn:hover {
+	opacity: 1;
+	background-color: #F0F0F0;
+	border: 1px solid #D0D0D0;
+	text-decoration: none;
 }
 
 .websiteCallForAction {
