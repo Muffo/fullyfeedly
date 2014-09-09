@@ -42,5 +42,9 @@
   "APIMissingKey": {
   	"message": "API Missing Key",
   	"description": "Notification message displayed when the key for API is missing"
+  },
+  "InvalidAPI": {
+    "message": "Invalid API",
+    "description": "Notification message displayed when API is not valid"
   }
 }
