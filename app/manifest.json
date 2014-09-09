@@ -1,6 +1,6 @@
 {
     "name": "__MSG_appName__",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "manifest_version": 2,
     "description": "__MSG_appDescription__",
     "icons": {
@@ -33,7 +33,8 @@
                 "scripts/content.js"
             ],
             "css": [
-                "libs/iosOverlay/iosOverlay.css"
+                "libs/iosOverlay/iosOverlay.css",
+                "styles/content.css"
             ]
         }
     ],
@@ -46,7 +47,7 @@
         "activeTab",
         "storage",
         "http://boilerpipe-web.appspot.com/*",
-        "http://www.readability.com/api/*"
+        "https://www.readability.com/api/*"
     ],
     "options_page": "options.html"
 }

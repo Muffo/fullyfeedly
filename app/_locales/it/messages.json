@@ -4,23 +4,23 @@
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "Show the full content of articles in Feedly",
+    "message": "Mostra il contenuto completo degli articoli in Feedly",
     "description": "The description of the application"
   },
   "articleNotLoaded": {
-  	"message": "Article Not Loaded",
+  	"message": "Articolo Non Caricato",
   	"description": "NNotification message displayed when the article is not loaded correctly"
   },
   "articleNotFound": {
-  	"message": "Article Not Found",
+  	"message": "Articolo Non Trovato",
   	"description": "Notification message displayed when the article is not found"
   },
   "loading": {
-  	"message": "Loading",
+  	"message": "Caricamento",
   	"description": "Notification message displayed while loading the article"
   },
   "done": {
-  	"message": "Done",
+  	"message": "Fatto",
   	"description": "Notification message displayed when the operation is completed with success"
   },
   "APIOverQuota": {
@@ -32,19 +32,15 @@
   	"description": "Notification message displayed when the API request format is not valid"
   },
   "APIAuthorizationRequired": {
-  	"message": "API Authorization Required",
+  	"message": "API Autorizzazione Richiesta",
   	"description": "Notification message displayed when API requires authorization"
   },
   "APIUnknownError": {
-  	"message": "API Unknown Error",
+  	"message": "API Errore Sconosciuto",
   	"description": "Notification message displayed when the an unknown error occurred"
   },
   "APIMissingKey": {
-  	"message": "API Missing Key",
+  	"message": "Chiave API Mancante",
   	"description": "Notification message displayed when the key for API is missing"
-  },
-  "InvalidAPI": {
-    "message": "Invalid API",
-    "description": "Notification message displayed when API is not valid"
   }
 }

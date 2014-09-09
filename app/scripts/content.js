@@ -49,7 +49,7 @@ function loadingOverlay() {
 	document.body.appendChild(target);
 	var spinner = new Spinner(spinOpts).spin(target);
     var overlay = iosOverlay({
-        text: 'Loading',
+        text: chrome.i18n.getMessage('loading'),
         spinner: spinner
     });
 
@@ -57,18 +57,16 @@ function loadingOverlay() {
 }
 
 function genericOverlay(message, icon, duration, overlay) {
-
+    var settings = {
+        text: message,
+        icon: icon
+    };
+    
     if (overlay === undefined || overlay === null) {
-        overlay = iosOverlay({
-            text: message,
-            icon: icon
-        });
+        overlay = iosOverlay(settings);
     }
     else {
-        overlay.update({
-            text: message,
-            icon: icon
-        });
+        overlay.update(settings);
     }
     window.setTimeout(function() {
         overlay.hide();
@@ -77,11 +75,15 @@ function genericOverlay(message, icon, duration, overlay) {
 }
 
 function successOverlay(message, overlay) {
-    genericOverlay(message, chrome.extension.getURL('images/check.png'), 1e3, overlay);
+    genericOverlay(chrome.i18n.getMessage(message),
+                    chrome.extension.getURL('images/check.png'),
+                    1e3, overlay);
 }
 
 function failOverlay(message, overlay) {
-    genericOverlay(message, chrome.extension.getURL('images/cross.png'), 2e3, overlay);
+    genericOverlay(chrome.i18n.getMessage(message),
+                    chrome.extension.getURL('images/cross.png'),
+                    2e3, overlay);
 }
 
 
@@ -97,7 +99,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     // Check if the API failed to extract the text
     if (data.status === null || data.status !== 'success') {
         console.log('[FullyFeedly] API failed to extract the content');
-        failOverlay('Article not loaded', overlay);
+        failOverlay(chrome.i18n.getMessage('articleNotLoaded'), overlay);
         return;
     }
 
@@ -108,7 +110,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     var contentElement = document.querySelector('.content');
     if (contentElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
-        failOverlay('No content', overlay);
+        failOverlay('contentNotFound', overlay);
         return;
     }
     
@@ -126,7 +128,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
     
-    successOverlay('Done', overlay);
+    successOverlay('done', overlay);
 }
 
 function boilerpipeRequest(xhr, overlay) {
@@ -138,10 +140,10 @@ function boilerpipeRequest(xhr, overlay) {
                 onBoilerpipeArticleExtracted(data, overlay);
             } else if (xhr.status === 503) {
                 console.log('[FullyFeedly] Boilerpipe API exceeded quota');
-                failOverlay('API over quota', overlay);
+                failOverlay('APIOverQuota', overlay);
             } else {
                 console.log('[FullyFeedly] Failed to load the content of the page');
-                failOverlay('Article not found', overlay);
+                failOverlay(chrome.i18n.getMessage('articleNotFound'), overlay);
             }
         }
     };
@@ -156,7 +158,7 @@ function onReadabilityArticleExtracted(data, overlay) {
     // Check if the API failed to extract the text
     if (data.content === null) {
         console.log('[FullyFeedly] API failed to extract the content');
-        failOverlay('Article not loaded', overlay);
+        failOverlay('articleNotFound', overlay);
         return;
     }
 
@@ -167,7 +169,7 @@ function onReadabilityArticleExtracted(data, overlay) {
     var contentElement = document.querySelector('.content');
     if (contentElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
-        failOverlay('No content', overlay);
+        failOverlay('contentNotFound', overlay);
         return;
     }
     
@@ -179,7 +181,7 @@ function onReadabilityArticleExtracted(data, overlay) {
 
     // Replace the preview of the article with the full text
     contentElement.innerHTML = articleContent;
-    successOverlay('Done', overlay);
+    successOverlay('done', overlay);
 
     // Put the image back at the beginning of the article
     if (articleImage !== null && contentElement.querySelector('img') === null) {
@@ -198,14 +200,14 @@ function readabilityRequest(xhr, overlay) {
                 console.log('[FullyFeedly] Readability API Bad request: ' +
                             'The server could not understand your request. ' +
                             'Verify that request parameters (and content, if any) are valid.');
-                failOverlay('API bad request', overlay);
+                failOverlay('APIBadRequest', overlay);
             } else if (xhr.status === 400) {
                 console.log('[FullyFeedly] Readability API Authorization Required: ' +
                             'Authentication failed or was not provided.');
-                failOverlay('API authorization required', overlay);
+                failOverlay('APIAuthorizationRequired', overlay);
             } else {
                 console.log('[FullyFeedly] Readability API Unknown error');
-                failOverlay('API unknown error', overlay);
+                failOverlay('APIUnknownError', overlay);
             }
         }
     };
@@ -214,10 +216,6 @@ function readabilityRequest(xhr, overlay) {
 
 /**
  * Performs an XMLHttpRequest to boilerpipe to get the content of the artile.
- *
- * @param callback Function If the response from fetching url has a
- *     HTTP status of 200, this function is called with a JSON decoded
- *     response.  Otherwise, this function is called with null.
  */
 function fetchPageContent() {
 
@@ -225,11 +223,10 @@ function fetchPageContent() {
     var linkElement = document.querySelector('.websiteCallForAction');
     if (linkElement === null) {
         console.log('[FullyFeedly] Link to article not found');
-        failOverlay('Article not found');
+        failOverlay('articleNotFound');
         return;
     }
 
-    
     // Get the link and convert it for usage as parameter in the GET request
     var pageUrl = linkElement.getAttribute('href');
     var encodedPageUrl = encodeURIComponent(pageUrl);
@@ -241,6 +238,7 @@ function fetchPageContent() {
     var xhr = new XMLHttpRequest();
     var url = '';
 
+    // Select the API to use to extract the article
     if (options.extractionAPI === 'Boilerpipe') {
         // Prepare the request to Boilerpipe
         url = 'http://boilerpipe-web.appspot.com/extract?url=' +
@@ -252,22 +250,26 @@ function fetchPageContent() {
     else if (options.extractionAPI === 'Readability') {
         // Check if the key is set
         if (options.readabilityAPIKey === '') {
-            failOverlay('Missing API Key', overlay);
+            failOverlay('APIMissingKey', overlay);
             return;
         }
 
         // Prepare the request to Readability
-        url = 'http://www.readability.com/api/content/v1/parser?url=' +
+        url = 'https://www.readability.com/api/content/v1/parser?url=' +
                 encodedPageUrl + '&token=' + options.readabilityAPIKey;
 
         xhr.onreadystatechange = readabilityRequest(xhr, overlay);
+    }
+    else {
+        failOverlay('InvalidAPI', overlay);
+        return;
     }
     xhr.open('GET', url, true);
     xhr.send();
 }
 
 
-/* Listen for requests */
+// Listen for requests 
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     // If the received message has the expected format...
     if (msg.text && (msg.text === 'extract_article')) {
@@ -277,4 +279,48 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     }
 });
 
+/* ================ DOM Observer =============== */
 
+// Define a generic DOM Observer
+var observeDOM = (function() {
+
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+    return function(obj, callback) {
+        // Define a new observer
+        var obs = new MutationObserver(function(mutations) {
+            if (mutations[0].addedNodes.length) {
+                callback(mutations);
+            }
+        });
+        // Have the observer observe foo for changes in children
+        obs.observe(obj, { childList:true, subtree:true });
+    };
+})();
+
+// This is used to add the button to the article when its
+// preview is opened in Feedly
+observeDOM(document.getElementById('box'), function() {
+    // Check if the button is already there
+    if (document.querySelector('.loadArticleBtn') !== null) {
+        return;
+    }
+
+    // Search the button to open the website and the container element
+    var openWebsiteBtn = document.querySelector('.websiteCallForAction');
+    var entryElement = document.querySelector('.u100entry');
+
+    if (openWebsiteBtn !== null && entryElement !== null) {
+        // Create a new button used to load the article
+        var loadArticleBtn = openWebsiteBtn.cloneNode();
+        loadArticleBtn.className = 'loadArticleBtn';
+        loadArticleBtn.innerText = 'Load Full Article';
+
+        // Remove the link and assign a different action
+        loadArticleBtn.removeAttribute('href');
+        loadArticleBtn.onclick = fetchPageContent;
+
+        // Add the new button to the page
+        entryElement.insertBefore(loadArticleBtn, openWebsiteBtn);
+        return;
+    }
+});
