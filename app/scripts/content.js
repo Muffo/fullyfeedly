@@ -227,7 +227,6 @@ function fetchPageContent() {
         return;
     }
 
-    
     // Get the link and convert it for usage as parameter in the GET request
     var pageUrl = linkElement.getAttribute('href');
     var encodedPageUrl = encodeURIComponent(pageUrl);
@@ -239,6 +238,7 @@ function fetchPageContent() {
     var xhr = new XMLHttpRequest();
     var url = '';
 
+    // Select the API to use to extract the article
     if (options.extractionAPI === 'Boilerpipe') {
         // Prepare the request to Boilerpipe
         url = 'http://boilerpipe-web.appspot.com/extract?url=' +
@@ -260,12 +260,16 @@ function fetchPageContent() {
 
         xhr.onreadystatechange = readabilityRequest(xhr, overlay);
     }
+    else {
+        failOverlay('InvalidAPI', overlay);
+        return;
+    }
     xhr.open('GET', url, true);
     xhr.send();
 }
 
 
-/* Listen for requests */
+// Listen for requests 
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     // If the received message has the expected format...
     if (msg.text && (msg.text === 'extract_article')) {
@@ -275,4 +279,48 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     }
 });
 
+/* ================ DOM Observer =============== */
 
+// Define a generic DOM Observer
+var observeDOM = (function() {
+
+    var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+    return function(obj, callback) {
+        // Define a new observer
+        var obs = new MutationObserver(function(mutations) {
+            if (mutations[0].addedNodes.length) {
+                callback(mutations);
+            }
+        });
+        // Have the observer observe foo for changes in children
+        obs.observe(obj, { childList:true, subtree:true });
+    };
+})();
+
+// This is used to add the button to the article when its
+// preview is opened in Feedly
+observeDOM(document.getElementById('box'), function() {
+    // Check if the button is already there
+    if (document.querySelector('.loadArticleBtn') !== null) {
+        return;
+    }
+
+    // Search the button to open the website and the container element
+    var openWebsiteBtn = document.querySelector('.websiteCallForAction');
+    var entryElement = document.querySelector('.u100entry');
+
+    if (openWebsiteBtn !== null && entryElement !== null) {
+        // Create a new button used to load the article
+        var loadArticleBtn = openWebsiteBtn.cloneNode();
+        loadArticleBtn.className = 'loadArticleBtn';
+        loadArticleBtn.innerText = 'Load Full Article';
+
+        // Remove the link and assign a different action
+        loadArticleBtn.removeAttribute('href');
+        loadArticleBtn.onclick = fetchPageContent;
+
+        // Add the new button to the page
+        entryElement.insertBefore(loadArticleBtn, openWebsiteBtn);
+        return;
+    }
+});
