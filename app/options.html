@@ -19,7 +19,7 @@
                     <div class="jumbotron">
                         <img src="images/icon-128.png" class="pull-right"/>
                         <h1>FullyFeedly</h1>
-                        <p>Extract the full content of the articles in Feedly.com</p>
+                        <p>Show the full content of the articles in Feedly.com</p>
                     </div>
                 </div>
             </div>
@@ -32,11 +32,14 @@
                             <option>Readability</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="readabilityAPIKey">Readability API key</label>
+                    <div class="form-group" id="readabilityKeyForm">
+                        <label for="readabilityAPIKey">Readability API key </label>
+                        <a class="pull-right" data-toggle="modal" data-target="#readabilityHelp">
+                            Help
+                        </a>
                         <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
                     </div>
-                    <button class="btn btn-primary" id="save">Save</button>
+                    <button class="btn btn-success" id="save">Save</button>
                     <span id="status"></span>
                 </div>
             </div>
@@ -47,7 +50,40 @@
                 </div>
             </div>
         </div>
-                
+        <!-- Readability help div -->
+        <div class="modal fade" id="readabilityHelp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h3 class="modal-title" id="readabilityHelpTitle">
+                            <img src="images/readability-logo.png" style="height: 30px;" />
+                            Readability API key
+                        </h3>
+                    </div>
+                    <div class="modal-body">
+                        Setup your Readability API key in two easy steps
+                        <h4>1. Create a free Readability account</h4>
+                        Visit <a href="http://readability.com" target="_blank">Readability.com</a> and create your free account.</br>
+                        You can also login using Facebook. 
+
+                        <h4>2. Get your API key </h4>
+                        Your personal API key is available in your
+                        <a href="https://www.readability.com/settings/account" target="_blank">account settings.</a></br>
+                        <img src="images/readability-help.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Github ribbon -->
+        <a href="https://github.com/muffo/fullyfeedly" target="_blank">
+            <img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkmeongithub.png" alt="Fork me on GitHub">
+        </a>
+
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
