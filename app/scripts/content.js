@@ -119,12 +119,12 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 
 function addShowFullArticleBtn() {
     addButton('Show Full Article', 'showFullArticleBtn',
-                fetchPageContent, 'showOriginalArticleBtn');
+                fetchPageContent, 'showArticlePreviewBtn');
 }
 
-function addShowOrigianlArticleBtn(showOriginalFunction) {
-    addButton('Show Original Article', 'showOriginalArticleBtn',
-                showOriginalFunction, 'showFullArticleBtn');
+function addShowArticlePreviewBtn(showPreviewFunction) {
+    addButton('Show Article Preview', 'showArticlePreviewBtn',
+                showPreviewFunction, 'showFullArticleBtn');
 }
 
 
@@ -161,7 +161,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     }
 
     // Replace the preview of the article with the full text
-    var originalArticleHTML = contentElement.innerHTML;
+    var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerText = articleContent;
 
     // Put the image back at the beginning of the article
@@ -169,7 +169,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
     
-    addUndoButton(originalArticleHTML);
+    addUndoButton(articlePreviewHTML);
     successOverlay('done', overlay);
 }
 
@@ -222,7 +222,7 @@ function onReadabilityArticleExtracted(data, overlay) {
     }
 
     // Replace the preview of the article with the full text
-    var originalArticleHTML = contentElement.innerHTML;
+    var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
     successOverlay('done', overlay);
 
@@ -231,7 +231,7 @@ function onReadabilityArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
 
-    addUndoButton(originalArticleHTML);
+    addUndoButton(articlePreviewHTML);
 }
 
 function readabilityRequest(xhr, overlay) {
@@ -313,12 +313,12 @@ function fetchPageContent() {
     xhr.send();
 }
 
-/* ===================== Show Original Article  ===================== */
+/* ===================== Show Article Preview ===================== */
 
 // Add a button to undo the operation and show the original preview of the article
-function addUndoButton(originalArticle) {
+function addUndoButton(articlePreviewHTML) {
     
-    function getShowOriginalFunction(originalArticleHTML) {
+    function getShowPreviewFunction(articlePreviewHTML) {
         return function() {
             // Search the element with the content
             var contentElement = document.querySelector('.content');
@@ -329,12 +329,12 @@ function addUndoButton(originalArticle) {
             }
 
             // Replace the preview of the article with the full text
-            contentElement.innerHTML = originalArticleHTML;
+            contentElement.innerHTML = articlePreviewHTML;
             addShowFullArticleBtn();
             successOverlay('done');
         };
     }
-    addShowOrigianlArticleBtn(getShowOriginalFunction(originalArticle));
+    addShowArticlePreviewBtn(getShowPreviewFunction(articlePreviewHTML));
 }
 
 /* ================ DOM Observer =============== */
@@ -360,7 +360,7 @@ var observeDOM = (function() {
 observeDOM(document.getElementById('box'), function() {
     // Check if the button is already there
     if (document.querySelector('.showFullArticleBtn') !== null ||
-        document.querySelector('.showOriginalArticleBtn') !== null) {
+        document.querySelector('.showArticlePreviewBtn') !== null) {
         return;
     }
     addShowFullArticleBtn();
