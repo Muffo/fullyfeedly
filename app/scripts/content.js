@@ -222,6 +222,7 @@ function onReadabilityArticleExtracted(data, overlay) {
     }
 
     // Replace the preview of the article with the full text
+    var originalText = contentElement.innerText;
     contentElement.innerHTML = articleContent;
     successOverlay('done', overlay);
 
@@ -229,6 +230,8 @@ function onReadabilityArticleExtracted(data, overlay) {
     if (articleImage !== null && contentElement.querySelector('img') === null) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
+
+    addUndoButton(originalText);
 }
 
 function readabilityRequest(xhr, overlay) {
