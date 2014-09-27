@@ -1,5 +1,5 @@
 /*global Spinner:false, iosOverlay:false */
-
+/*jslint latedef:false*/
 
 'use strict';
 
@@ -86,6 +86,46 @@ function failOverlay(message, overlay) {
                     2e3, overlay);
 }
 
+/* ===================== Buttons management  ===================== */
+function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
+
+    // Search the button to open the website and the container element
+    var openWebsiteBtn = document.querySelector('.websiteCallForAction');
+    var entryElement = document.querySelector('.u100entry');
+
+    if (openWebsiteBtn === null || entryElement === null) {
+        return;
+    }
+
+    // Create a new button used to load the article
+    var newButton = openWebsiteBtn.cloneNode();
+    newButton.className = btnClass;
+    newButton.innerText = btnText;
+
+    // Remove the link and assign a different action
+    newButton.removeAttribute('href');
+    newButton.onclick = btnAction;
+
+    // Add the new button to the page
+    entryElement.insertBefore(newButton, openWebsiteBtn);
+    
+    // Remove the old button
+    var oldButton = document.querySelector('.' + deleteBtnClass);
+    if (oldButton === null) {
+        return;
+    }
+    oldButton.parentNode.removeChild(oldButton);
+}
+
+function addShowFullArticleBtn() {
+    addButton('Show Full Article', 'showFullArticleBtn',
+                fetchPageContent, 'showOriginalArticleBtn');
+}
+
+function addShowOrigianlArticleBtn(showOriginalFunction) {
+    addButton('Show Original Article', 'showOriginalArticleBtn',
+                showOriginalFunction, 'showFullArticleBtn');
+}
 
 
 /* ===================== Boilerpipe ===================== */
@@ -121,6 +161,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     }
 
     // Replace the preview of the article with the full text
+    var originalText = contentElement.innerText;
     contentElement.innerText = articleContent;
 
     // Put the image back at the beginning of the article
@@ -128,6 +169,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
     
+    addUndoButton(originalText);
     successOverlay('done', overlay);
 }
 
@@ -268,16 +310,29 @@ function fetchPageContent() {
     xhr.send();
 }
 
+/* ===================== Show Original Article  ===================== */
 
-// Listen for requests 
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-    // If the received message has the expected format...
-    if (msg.text && (msg.text === 'extract_article')) {
-        // Perform the specified operation
-        fetchPageContent();
-        sendResponse('Got it!');
+// Add a button to undo the operation and show the original preview of the article
+function addUndoButton(originalArticle) {
+    
+    function getShowOriginalFunction(originalText) {
+        return function() {
+            // Search the element with the content
+            var contentElement = document.querySelector('.content');
+            if (contentElement === null) {
+                console.log('[FullyFeedly] There is something wrong: no content element found');
+                failOverlay('error');
+                return;
+            }
+
+            // Replace the preview of the article with the full text
+            contentElement.innerText = originalText;
+            addShowFullArticleBtn();
+            successOverlay('done');
+        };
     }
-});
+    addShowOrigianlArticleBtn(getShowOriginalFunction(originalArticle));
+}
 
 /* ================ DOM Observer =============== */
 
@@ -301,26 +356,19 @@ var observeDOM = (function() {
 // preview is opened in Feedly
 observeDOM(document.getElementById('box'), function() {
     // Check if the button is already there
-    if (document.querySelector('.loadArticleBtn') !== null) {
+    if (document.querySelector('.showFullArticleBtn') !== null ||
+        document.querySelector('.showOriginalArticleBtn') !== null) {
         return;
     }
+    addShowFullArticleBtn();
+});
 
-    // Search the button to open the website and the container element
-    var openWebsiteBtn = document.querySelector('.websiteCallForAction');
-    var entryElement = document.querySelector('.u100entry');
-
-    if (openWebsiteBtn !== null && entryElement !== null) {
-        // Create a new button used to load the article
-        var loadArticleBtn = openWebsiteBtn.cloneNode();
-        loadArticleBtn.className = 'loadArticleBtn';
-        loadArticleBtn.innerText = 'Load Full Article';
-
-        // Remove the link and assign a different action
-        loadArticleBtn.removeAttribute('href');
-        loadArticleBtn.onclick = fetchPageContent;
-
-        // Add the new button to the page
-        entryElement.insertBefore(loadArticleBtn, openWebsiteBtn);
-        return;
+// Listen for requests coming from clicks on the page action button
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+    // If the received message has the expected format...
+    if (msg.text && (msg.text === 'extract_article')) {
+        // Perform the specified operation
+        fetchPageContent();
+        sendResponse('Got it!');
     }
 });
