@@ -161,7 +161,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     }
 
     // Replace the preview of the article with the full text
-    var originalText = contentElement.innerText;
+    var originalArticleHTML = contentElement.innerHTML;
     contentElement.innerText = articleContent;
 
     // Put the image back at the beginning of the article
@@ -169,7 +169,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
     
-    addUndoButton(originalText);
+    addUndoButton(originalArticleHTML);
     successOverlay('done', overlay);
 }
 
@@ -222,7 +222,7 @@ function onReadabilityArticleExtracted(data, overlay) {
     }
 
     // Replace the preview of the article with the full text
-    var originalText = contentElement.innerText;
+    var originalArticleHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
     successOverlay('done', overlay);
 
@@ -231,7 +231,7 @@ function onReadabilityArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
 
-    addUndoButton(originalText);
+    addUndoButton(originalArticleHTML);
 }
 
 function readabilityRequest(xhr, overlay) {
@@ -318,7 +318,7 @@ function fetchPageContent() {
 // Add a button to undo the operation and show the original preview of the article
 function addUndoButton(originalArticle) {
     
-    function getShowOriginalFunction(originalText) {
+    function getShowOriginalFunction(originalArticleHTML) {
         return function() {
             // Search the element with the content
             var contentElement = document.querySelector('.content');
@@ -329,7 +329,7 @@ function addUndoButton(originalArticle) {
             }
 
             // Replace the preview of the article with the full text
-            contentElement.innerText = originalText;
+            contentElement.innerHTML = originalArticleHTML;
             addShowFullArticleBtn();
             successOverlay('done');
         };
