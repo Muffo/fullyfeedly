@@ -23,6 +23,10 @@
   	"message": "Fatto",
   	"description": "Notification message displayed when the operation is completed with success"
   },
+  "error": {
+    "message": "Errore",
+    "description": "Notification message displayed when the operation failed for generic error"
+  },
   "APIOverQuota": {
   	"message": "API Over Quota",
   	"description": "Notification message displayed when API exceeded free usage quota"
