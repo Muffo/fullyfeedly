@@ -9,7 +9,7 @@ Chrome extension to display the full content of articles in Feedly
 The RSS feed of some website contains only a preview of the articles.
 FullFeedly is a chrome extensions that allows you to read the full article without leaving Feedly.com
 
-When reading an imcomplete post, simply press the icon of FullFeedly in the URL bar to download the full text.
+When reading an incomplete post, simply press the icon of FullFeedly in the URL bar to download the full text.
 
 
 ## Developer
