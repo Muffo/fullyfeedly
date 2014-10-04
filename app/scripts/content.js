@@ -368,10 +368,13 @@ observeDOM(document.getElementById('box'), function() {
 
 // Listen for requests coming from clicks on the page action button
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-    // If the received message has the expected format...
+    // Process the requests according to the action specified
     if (msg.text && (msg.text === 'extract_article')) {
-        // Perform the specified operation
-        fetchPageContent();
-        sendResponse('Got it!');
+        // Check if the operation is allowed
+        if (document.querySelector('.showFullArticleBtn') !== null )
+        {
+            fetchPageContent();
+        }
+        sendResponse('done');
     }
 });
