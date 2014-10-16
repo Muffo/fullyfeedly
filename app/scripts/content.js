@@ -346,7 +346,8 @@ var observeDOM = (function() {
     return function(obj, callback) {
         // Define a new observer
         var obs = new MutationObserver(function(mutations) {
-            if (mutations[0].addedNodes.length) {
+            if (mutations[0].addedNodes.length > 0 
+                || mutations[0].removedNodes.length > 0) {
                 callback(mutations);
             }
         });
