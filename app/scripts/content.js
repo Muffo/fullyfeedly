@@ -91,7 +91,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 
     // Search the button to open the website and the container element
     var openWebsiteBtn = document.querySelector('.websiteCallForAction');
-    var entryElement = document.querySelector('.u100entry');
+    var entryElement = document.querySelector('.u100Entry');
 
     if (openWebsiteBtn === null || entryElement === null) {
         return;
