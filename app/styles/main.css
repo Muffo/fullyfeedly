@@ -1,3 +1,8 @@
 body {
     padding: 20px;
 }
+
+#tryShortcut {
+    padding: 3px 8px;
+    border-radius: 3px;
+}

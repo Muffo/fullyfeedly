@@ -2,7 +2,8 @@
   "name": "fullyfeedly",
   "version": "0.0.0",
   "dependencies": {
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "mousetrap": "~1.5.2"
   },
   "devDependencies": {}
 }

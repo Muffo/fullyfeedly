@@ -1,4 +1,4 @@
-/*global Spinner:false, iosOverlay:false */
+/*global Spinner:false, iosOverlay:false, Mousetrap:false */
 /*jslint latedef:false*/
 
 'use strict';
@@ -6,20 +6,20 @@
 /* ===================== Options ===================== */
 var options = {
     extractionAPI: 'Boilerpipe',
-    readabilityAPIKey: ''
+    readabilityAPIKey: '',
+    enableShortcut: false
 };
 
 // Restores the options using the preferences stored in chrome.storage.
 (function restoreOptions() {
-    chrome.storage.sync.get({
-        extractionAPI: 'Boilerpipe',
-        readabilityAPIKey: ''
-    }, function(items) {
-        options = items;
-        console.log('[FullyFeedly] Loaded options: ', options);
-    });
+    chrome.storage.sync.get(
+        options,
+        function(items) {
+            options = items;
+            console.log('[FullyFeedly] Loaded options: ', options);
+        }
+    );
 })();
-
 
 
 /* ===================== Notifications ===================== */
@@ -120,11 +120,21 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 function addShowFullArticleBtn() {
     addButton('Show Full Article', 'showFullArticleBtn',
                 fetchPageContent, 'showArticlePreviewBtn');
+    
+    // Add keyboard shortcut
+    if (options.enableShortcut) {
+        Mousetrap.bind('f f', fetchPageContent);
+    }
 }
 
 function addShowArticlePreviewBtn(showPreviewFunction) {
     addButton('Show Article Preview', 'showArticlePreviewBtn',
                 showPreviewFunction, 'showFullArticleBtn');
+    
+    // Add keyboard shortcut
+    if (options.enableShortcut) {
+        Mousetrap.bind('f f', showPreviewFunction);
+    }
 }
 
 
@@ -346,8 +356,7 @@ var observeDOM = (function() {
     return function(obj, callback) {
         // Define a new observer
         var obs = new MutationObserver(function(mutations) {
-            if (mutations[0].addedNodes.length > 0 
-                || mutations[0].removedNodes.length > 0) {
+            if (mutations[0].addedNodes.length > 0 || mutations[0].removedNodes.length > 0) {
                 callback(mutations);
             }
         });
@@ -359,7 +368,7 @@ var observeDOM = (function() {
 // This is used to add the button to the article when its
 // preview is opened in Feedly
 observeDOM(document.getElementById('box'), function() {
-    // Check if the button is already there
+    // Check if the button is already there otherwise add it
     if (document.querySelector('.showFullArticleBtn') !== null ||
         document.querySelector('.showArticlePreviewBtn') !== null) {
         return;
@@ -379,3 +388,5 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         sendResponse('done');
     }
 });
+
+
