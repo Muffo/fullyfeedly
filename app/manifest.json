@@ -30,6 +30,7 @@
             "js": [
                 "libs/spinjs/spin.js",
                 "libs/iosOverlay/iosOverlay.js",
+                "bower_components/mousetrap/mousetrap.js",
                 "scripts/content.js"
             ],
             "css": [

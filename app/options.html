@@ -39,6 +39,14 @@
                         </a>
                         <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="enableShortcut"> Enable keyboard shortcut <code>f f</code>
+                        </label>
+                        <span class="pull-right" id="tryShortcut">
+                            Try me
+                        </span>
+                    </div>
                     <button class="btn btn-success" id="save">Save</button>
                     <span id="status"></span>
                 </div>
@@ -88,6 +96,7 @@
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="bower_components/mousetrap/mousetrap.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 

@@ -1,4 +1,4 @@
-/*global $:false */
+/*global $:false, Mousetrap:false */
 
 'use strict';
 
@@ -14,10 +14,19 @@ function updateForm() {
     }
 }
 
+// Show a visual confirmation to the user
+function onKeyboardShortcut() {
+    $('#tryShortcut').css('background-color', '#5cb85c');
+    setTimeout(function() {
+        $('#tryShortcut').css('background-color', 'white');
+    }, 500);
+}
+
 // Saves options to chrome.storage
 function saveOptions() {
     var extractionAPI = $('#extractionAPI').val();
     var readabilityAPIKey = $('#readabilityAPIKey').val();
+    var enableShortcut = $('#enableShortcut').prop('checked');
     var status = $('#status');
 
     // Check optional paramenters
@@ -36,7 +45,8 @@ function saveOptions() {
 
     chrome.storage.sync.set({
         extractionAPI: extractionAPI,
-        readabilityAPIKey: readabilityAPIKey
+        readabilityAPIKey: readabilityAPIKey,
+        enableShortcut: enableShortcut
     }, function() {
         // Update status to let user know options were saved.
         status.text('Options saved');
@@ -51,10 +61,12 @@ function restoreOptions() {
     // Use default value extractionAPI = 'red' and readabilityAPIKey = ''
     chrome.storage.sync.get({
         extractionAPI: 'Boilerpipe',
-        readabilityAPIKey: ''
+        readabilityAPIKey: '',
+        enableShortcut: false
     }, function(items) {
         $('#extractionAPI').val(items.extractionAPI);
         $('#readabilityAPIKey').val(items.readabilityAPIKey);
+        $('#enableShortcut').prop('checked', items.enableShortcut);
         updateForm();
     });
 }
@@ -63,3 +75,5 @@ function restoreOptions() {
 document.addEventListener('DOMContentLoaded', restoreOptions);
 $('#save').click(saveOptions);
 $('#extractionAPI').change(updateForm);
+
+Mousetrap.bind('f f', onKeyboardShortcut);
