@@ -2,7 +2,15 @@ body {
     padding: 20px;
 }
 
+.jumbotron h1 {
+    font-weight: bold;   
+}
+
 #tryShortcut {
     padding: 3px 8px;
     border-radius: 3px;
+}
+
+#icon128 {
+    margin: 10px 10px 0px 0px;
 }
