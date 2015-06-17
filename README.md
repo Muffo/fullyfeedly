@@ -1,10 +1,10 @@
 # FullyFeedly
 
-### Chrome extensions to read the full articles inside leaving Feedly.com
+### Chrome extensions to read the full articles in Feedly.com
 
 [![Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chrome.google.com/webstore/detail/fullyfeedly/ikdncbjpcpkheefmnbicggciklkeebmp?hl=en)
 
-With FullyFeedly you can load the full content of the articles inside Feedly, even though the feed RSS contains only a short preview.
+With FullyFeedly you can load the full content of the articles inside Feedly, also when the feed RSS contains only a short preview.
 
 ## Features
 
