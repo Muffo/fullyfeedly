@@ -43,7 +43,7 @@ function loadingOverlay() {
 		top: 'auto', // Top position relative to parent in px
 		left: 'auto' // Left position relative to parent in px
 	};
-    
+
     // Create the spinner and the overlay
 	var target = document.createElement('div');
 	document.body.appendChild(target);
@@ -61,7 +61,7 @@ function genericOverlay(message, icon, duration, overlay) {
         text: message,
         icon: icon
     };
-    
+
     if (overlay === undefined || overlay === null) {
         overlay = iosOverlay(settings);
     }
@@ -90,11 +90,15 @@ function failOverlay(message, overlay) {
 function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 
     // Search the button to open the website and the container element
-    var openWebsiteBtn = document.querySelector('.websiteCallForAction');
+    var openWebsiteBtn = document.querySelector('.u100Entry .fx-button.secondary.full-width');
     var entryElement = document.querySelector('.u100Entry');
 
     if (openWebsiteBtn === null || entryElement === null) {
         return;
+    }
+
+    if(openWebsiteBtn.className.indexOf('websiteCallForAction') === -1) {
+        openWebsiteBtn.className += ' websiteCallForAction';
     }
 
     // Create a new button used to load the article
@@ -108,7 +112,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 
     // Add the new button to the page
     entryElement.insertBefore(newButton, openWebsiteBtn);
-    
+
     // Remove the old button
     var oldButton = document.querySelector('.' + deleteBtnClass);
     if (oldButton === null) {
@@ -120,7 +124,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 function addShowFullArticleBtn() {
     addButton('Show Full Article', 'showFullArticleBtn',
                 fetchPageContent, 'showArticlePreviewBtn');
-    
+
     // Add keyboard shortcut
     if (options.enableShortcut) {
         Mousetrap.bind('f f', fetchPageContent);
@@ -130,7 +134,7 @@ function addShowFullArticleBtn() {
 function addShowArticlePreviewBtn(showPreviewFunction) {
     addButton('Show Article Preview', 'showArticlePreviewBtn',
                 showPreviewFunction, 'showFullArticleBtn');
-    
+
     // Add keyboard shortcut
     if (options.enableShortcut) {
         Mousetrap.bind('f f', showPreviewFunction);
@@ -140,12 +144,12 @@ function addShowArticlePreviewBtn(showPreviewFunction) {
 
 /* ===================== Boilerpipe ===================== */
 /**
- * Process the content of the article and add it to the page 
+ * Process the content of the article and add it to the page
  *
  * @param data Object JSON decoded response.  Null if the request failed.
  */
 function onBoilerpipeArticleExtracted(data, overlay) {
-    
+
     // Check if the API failed to extract the text
     if (data.status === null || data.status !== 'success') {
         console.log('[FullyFeedly] API failed to extract the content');
@@ -163,7 +167,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         failOverlay('contentNotFound', overlay);
         return;
     }
-    
+
     // If there is an image we want to keep it
     var articleImage = contentElement.querySelector('img');
     if (articleImage !== null) {
@@ -178,7 +182,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     if (articleImage !== null) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
-    
+
     addUndoButton(articlePreviewHTML);
     successOverlay('done', overlay);
 }
@@ -203,10 +207,10 @@ function boilerpipeRequest(xhr, overlay) {
 
 /* ===================== Readability ===================== */
 /**
- * Process the content of the article and add it to the page 
+ * Process the content of the article and add it to the page
  */
 function onReadabilityArticleExtracted(data, overlay) {
-    
+
     // Check if the API failed to extract the text
     if (data.content === null) {
         console.log('[FullyFeedly] API failed to extract the content');
@@ -224,7 +228,7 @@ function onReadabilityArticleExtracted(data, overlay) {
         failOverlay('contentNotFound', overlay);
         return;
     }
-    
+
     // If there is an image we want to keep it
     var articleImage = contentElement.querySelector('img');
     if (articleImage !== null) {
@@ -285,11 +289,11 @@ function fetchPageContent() {
     // Get the link and convert it for usage as parameter in the GET request
     var pageUrl = linkElement.getAttribute('href');
     var encodedPageUrl = encodeURIComponent(pageUrl);
-    
+
     // Show loading overlay
     var overlay = loadingOverlay();
 
-    // Create the asynch HTTP request 
+    // Create the asynch HTTP request
     var xhr = new XMLHttpRequest();
     var url = '';
 
@@ -327,7 +331,7 @@ function fetchPageContent() {
 
 // Add a button to undo the operation and show the original preview of the article
 function addUndoButton(articlePreviewHTML) {
-    
+
     function getShowPreviewFunction(articlePreviewHTML) {
         return function() {
             // Search the element with the content
