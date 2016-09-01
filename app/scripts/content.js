@@ -161,12 +161,14 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     var articleContent = data.response.content;
 
     // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
-    if (contentElement === null) {
+    var entryElement = document.querySelector('.u100Entry');
+    if (entryElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
         failOverlay('contentNotFound', overlay);
         return;
     }
+
+    var contentElement = entryElement.querySelector('.entryBody');
 
     // If there is an image we want to keep it
     var articleImage = contentElement.querySelector('img');
@@ -183,7 +185,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
 
-    addUndoButton(articlePreviewHTML);
+    addUndoButton(articlePreviewHTML, contentElement);
     successOverlay('done', overlay);
 }
 
@@ -222,12 +224,14 @@ function onReadabilityArticleExtracted(data, overlay) {
     var articleContent = data.content;
 
     // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
-    if (contentElement === null) {
+    var entryElement = document.querySelector('.u100Entry');
+    if (entryElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
         failOverlay('contentNotFound', overlay);
         return;
     }
+
+    var contentElement = entryElement.querySelector('.entryBody');
 
     // If there is an image we want to keep it
     var articleImage = contentElement.querySelector('img');
@@ -245,7 +249,7 @@ function onReadabilityArticleExtracted(data, overlay) {
         contentElement.insertBefore(articleImage, contentElement.firstChild);
     }
 
-    addUndoButton(articlePreviewHTML);
+    addUndoButton(articlePreviewHTML, contentElement);
 }
 
 function readabilityRequest(xhr, overlay) {
@@ -330,17 +334,17 @@ function fetchPageContent() {
 /* ===================== Show Article Preview ===================== */
 
 // Add a button to undo the operation and show the original preview of the article
-function addUndoButton(articlePreviewHTML) {
+function addUndoButton(articlePreviewHTML, contentElement) {
 
-    function getShowPreviewFunction(articlePreviewHTML) {
+    function getShowPreviewFunction(articlePreviewHTML, contentElement) {
         return function() {
             // Search the element with the content
-            var contentElement = document.querySelector('.content');
+            /*var contentElement = document.querySelector('.content');
             if (contentElement === null) {
                 console.log('[FullyFeedly] There is something wrong: no content element found');
                 failOverlay('error');
                 return;
-            }
+            }*/
 
             // Replace the preview of the article with the full text
             contentElement.innerHTML = articlePreviewHTML;
@@ -348,7 +352,7 @@ function addUndoButton(articlePreviewHTML) {
             successOverlay('done');
         };
     }
-    addShowArticlePreviewBtn(getShowPreviewFunction(articlePreviewHTML));
+    addShowArticlePreviewBtn(getShowPreviewFunction(articlePreviewHTML, contentElement));
 }
 
 /* ================ DOM Observer =============== */
@@ -392,5 +396,3 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         sendResponse('done');
     }
 });
-
-
