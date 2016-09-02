@@ -1,0 +1,54 @@
+{
+  "appName": {
+    "message": "FullyFeedly",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Ajoute de la lisibilité à Feedly et affiche le contenu intégral des articles",
+    "description": "The description of the application"
+  },
+  "articleNotLoaded": {
+  	"message": "Article non chargée",
+  	"description": "NNotification message displayed when the article is not loaded correctly"
+  },
+  "articleNotFound": {
+  	"message": "Article non trouvée",
+  	"description": "Notification message displayed when the article is not found"
+  },
+  "loading": {
+  	"message": "Chargement",
+  	"description": "Notification message displayed while loading the article"
+  },
+  "done": {
+  	"message": "Terminé",
+  	"description": "Notification message displayed when the operation is completed with success"
+  },
+  "error": {
+    "message": "Erreur",
+    "description": "Notification message displayed when the operation failed for generic error"
+  },
+  "APIOverQuota": {
+  	"message": "Le service a atteint son seuil maximal de chargement d'article pour la journée, attendez 24 heures pour l'utiliser de nouveau",
+  	"description": "Notification message displayed when API exceeded free usage quota"
+  },
+  "APIBadRequest": {
+  	"message": "Mauvaise requete à l'API Readability, le service a peut être changer prévenez le responsable de cette extension.",
+  	"description": "Notification message displayed when the API request format is not valid"
+  },
+  "APIAuthorizationRequired": {
+  	"message": "Authentification requise à l'API Readability, le service a peut être changer prévenez le responsable de cette extension.",
+  	"description": "Notification message displayed when API requires authorization"
+  },
+  "APIUnknownError": {
+  	"message": "API Erreur inconnue, prévenez le responsable de cette extension.",
+  	"description": "Notification message displayed when the an unknown error occurred"
+  },
+  "APIMissingKey": {
+  	"message": "La clé Readability n'a pas été saisie, aller dans les options pour la renseigner",
+  	"description": "Notification message displayed when the key for API is missing"
+  },
+  "InvalidAPI": {
+    "message": "API Invalide, le service a peut être changer prévenez le responsable de cette extension.",
+    "description": "Notification message displayed when API is not valid"
+  }
+}
