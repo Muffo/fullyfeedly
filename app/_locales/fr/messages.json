@@ -50,5 +50,13 @@
   "InvalidAPI": {
     "message": "API Invalide, le service a peut être changer prévenez le responsable de cette extension.",
     "description": "Notification message displayed when API is not valid"
+  },
+  "showFullArticle": {
+    "message" : "Voir l'article complet",
+    "description": "Button added in all article to get the full content of the article"
+  },
+  "showArticlePreview": {
+    "message" : "Retourner à la prévisualisation",
+    "description": "Button added in all article to get the full content of the article"
   }
 }
