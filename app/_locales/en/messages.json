@@ -53,10 +53,10 @@
   },
   "showFullArticle": {
     "message" : "Show Full Article",
-    "description": "Button added in all article to get the full content of the article"
+    "description": "Button added in all article to show the full content of the article"
   },
   "showArticlePreview": {
     "message" : "Show Article Preview",
-    "description": "Button added in all article to get the full content of the article"
+    "description": "Button added in all article to show the preview of the article"
   }
 }

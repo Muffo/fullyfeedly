@@ -53,10 +53,74 @@
   },
   "showFullArticle": {
     "message" : "Voir l'article complet",
-    "description": "Button added in all article to get the full content of the article"
+    "description": "Button added in all article to show the full content of the article"
   },
   "showArticlePreview": {
     "message" : "Retourner à la prévisualisation",
-    "description": "Button added in all article to get the full content of the article"
+    "description": "Button added in all article to show the preview of the article"
+  },
+  "optionsArticleExtractionAPI": {
+    "message": "Type d'extraction des articles",
+    "description": "Label in the option page for select type of API"
+  },
+  "optionsReadabilityApiKey": {
+    "message": "Clé de l'API Readability",
+    "description": "Label in the option page for set the readbility api key"
+  },
+  "optionsHelp": {
+    "message": "Aide",
+    "description": "Help link"
+  },
+  "optionsTryMe": {
+    "message": "Essayez-moi",
+    "description": "Try me text for keyboard shortcut"
+  },
+  "optionsSave": {
+    "message": "Enregistrer",
+    "description": "Save options button"
+  },
+  "optionsEnableKeyboardShortcut": {
+    "message": "Activer le racourcis clavier",
+    "description": "Label in the option page for activate the keyboard shortcut"
+  },
+  "optionsDevelopedBy": {
+    "message" : "Développé par",
+    "description": "Text in the buttom page Developped by"
+  },
+  "optionsClose": {
+    "message": "Fermer",
+    "description": "Close the help popup"
+  },
+  "optionsSetupReadbilityApiKey": {
+    "message" : "Créez votre clé d'API Readabilité en deux étapes simples.",
+    "description": "Readability Help / first line : Setup your Readability API key in two easy steps"
+  },
+  "optionsStepOne": {
+    "message" : "1. Créez un compte gratuit Readability",
+    "description": "Readability Help / first step / Title : 1. Create a free Readability account"
+  },
+  "optionsVisit": {
+    "message" : "Visitez le site",
+    "description": "Readability Help / first step : Visit"
+  },
+  "optionsCreateFreeAccount": {
+    "message" : "et créez vous un compte gratuit.",
+    "description": "Readability Help / first step : and create your free account."
+  },
+  "optionsLoginFacebook": {
+    "message" : "Vous pouvez aussi vous connecter en utilisant Facebook.",
+    "description": "Readability Help / first step / Facebook : You can also login using Facebook."
+  },
+  "optionsStepTwo": {
+    "message" : "2. Récupérez votre clé d'API.",
+    "description": "Readability Help / second step / Title : 2. Get your API key"
+  },
+  "optionsYourApiKeyAvailableIn": {
+    "message" : "Votre clé personnel d'API est disponible dans les",
+    "description": "Readability Help / second step / Text : Your personal API key is available in your"
+  },
+  "optionsAccountSettings": {
+    "message" : "Propriétés de votre compte (Settings/Account)",
+    "description": "Readability Help / second step / Link : account settings."
   }
 }
