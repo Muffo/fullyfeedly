@@ -147,8 +147,9 @@ function addShowArticlePreviewBtn(showPreviewFunction) {
  * Process the content of the article and add it to the page
  *
  * @param data Object JSON decoded response.  Null if the request failed.
+ * @param outputHtml If the output is html.
  */
-function onBoilerpipeArticleExtracted(data, overlay) {
+function onBoilerpipeArticleExtracted(data, overlay, outputHtml) {
 
     // Check if the API failed to extract the text
     if (data.status === null || data.status !== 'success') {
@@ -176,7 +177,10 @@ function onBoilerpipeArticleExtracted(data, overlay) {
 
     // Replace the preview of the article with the full text
     var articlePreviewHTML = contentElement.innerHTML;
-    contentElement.innerText = articleContent;
+    if (outputHtml)
+      contentElement.innerHTML = articleContent;
+    else
+      contentElement.innerText = articleContent;
 
     // Put the image back at the beginning of the article
     if (articleImage !== null) {
@@ -187,13 +191,83 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     successOverlay('done', overlay);
 }
 
-function boilerpipeRequest(xhr, overlay) {
+function boilerpipeRequest(xhr, overlay, outputHtml) {
     return function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Operation succeded
-                var data = JSON.parse(xhr.responseText);
-                onBoilerpipeArticleExtracted(data, overlay);
+                if (outputHtml) {
+                    var data = {response: {content: xhr.responseText}, "status": "success"};
+                }
+                else {
+                  var data = JSON.parse(xhr.responseText);
+                }
+                onBoilerpipeArticleExtracted(data, overlay, outputHtml);
+            } else if (xhr.status === 503) {
+                console.log('[FullyFeedly] Boilerpipe API exceeded quota');
+                failOverlay('APIOverQuota', overlay);
+            } else {
+                console.log('[FullyFeedly] Failed to load the content of the page');
+                failOverlay(chrome.i18n.getMessage('articleNotFound'), overlay);
+            }
+        }
+    };
+}
+
+
+/* ===================== Article Extractor ===================== */
+/**
+ * Process the content of the article and add it to the page
+ *
+ * @param data Html of the page.
+ */
+function onArticleExtractorExtracted(data, overlay) {
+
+    // Check if the API failed to extract the text
+    if (data === null || data === '') {
+        console.log('[FullyFeedly] API failed to extract the content');
+        failOverlay(chrome.i18n.getMessage('articleNotLoaded'), overlay);
+        return;
+    }
+
+    // Get the content of the article
+    var articleContent = $(data).find("article").html();
+
+    // Search the element of the page that will containt the text
+    var entryElement = document.querySelector('.u100Entry');
+    if (entryElement === null) {
+        console.log('[FullyFeedly] There is something wrong: no content element found');
+        failOverlay('contentNotFound', overlay);
+        return;
+    }
+
+    var contentElement = entryElement.querySelector('.entryBody');
+
+    // If there is an image we want to keep it
+    var articleImage = contentElement.querySelector('img');
+    if (articleImage !== null) {
+        articleImage = articleImage.cloneNode();
+    }
+
+    // Replace the preview of the article with the full text
+    var articlePreviewHTML = contentElement.innerHTML;
+    contentElement.innerHTML = articleContent;
+
+    // Put the image back at the beginning of the article
+    if (articleImage !== null) {
+        contentElement.insertBefore(articleImage, contentElement.firstChild);
+    }
+
+    addUndoButton(articlePreviewHTML, contentElement);
+    successOverlay('done', overlay);
+}
+
+function articleExtractorRequest(xhr, overlay) {
+    return function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                onArticleExtractorExtracted(xhr.responseText, overlay);
             } else if (xhr.status === 503) {
                 console.log('[FullyFeedly] Boilerpipe API exceeded quota');
                 failOverlay('APIOverQuota', overlay);
@@ -304,7 +378,33 @@ function fetchPageContent() {
                 encodedPageUrl +
                 '&extractor=ArticleExtractor&output=json&extractImages=';
 
-        xhr.onreadystatechange = boilerpipeRequest(xhr, overlay);
+        xhr.onreadystatechange = boilerpipeRequest(xhr, overlay, false);
+    }
+    else if (options.extractionAPI === 'Boilerpipe HTML') {
+        // Prepare the request to Boilerpipe
+        url = 'http://boilerpipe-web.appspot.com/extract?url=' +
+                encodedPageUrl +
+                '&extractor=ArticleExtractor&output=htmlFragment&extractImages=';
+
+        xhr.onreadystatechange = boilerpipeRequest(xhr, overlay, true);
+    }
+    else if (options.extractionAPI === 'ArticleExtractor') {
+        // Prepare the request to Boilerpipe
+        url = pageUrl;
+        chrome.runtime.sendMessage({url: pageUrl}, function(response) {
+          if (response) {
+            if (response.error) {
+              failOverlay(response.error, overlay);
+            }
+            else if (response.content) {
+              onArticleExtractorExtracted(response.content, overlay);
+            }
+          }
+          else {
+            failOverlay('APIUnknownError', overlay);
+          }
+        });
+        return;
     }
     else if (options.extractionAPI === 'Readability') {
         // Check if the key is set

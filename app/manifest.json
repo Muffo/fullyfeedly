@@ -31,6 +31,7 @@
                 "libs/spinjs/spin.js",
                 "libs/iosOverlay/iosOverlay.js",
                 "bower_components/mousetrap/mousetrap.js",
+                "bower_components/jquery/dist/jquery.js",
                 "scripts/content.js"
             ],
             "css": [
@@ -48,7 +49,9 @@
         "activeTab",
         "storage",
         "http://boilerpipe-web.appspot.com/*",
-        "https://www.readability.com/api/*"
+        "https://www.readability.com/api/*",
+        "http://*/",
+        "https://*/"
     ],
     "options_page": "options.html"
 }
