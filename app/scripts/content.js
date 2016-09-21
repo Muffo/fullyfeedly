@@ -122,7 +122,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 }
 
 function addShowFullArticleBtn() {
-    addButton('Show Full Article', 'showFullArticleBtn fx-button secondary full-width',
+    addButton(chrome.i18n.getMessage('showFullArticle'), 'showFullArticleBtn fx-button secondary full-width',
                 fetchPageContent, 'showArticlePreviewBtn');
 
     // Add keyboard shortcut
@@ -132,7 +132,7 @@ function addShowFullArticleBtn() {
 }
 
 function addShowArticlePreviewBtn(showPreviewFunction) {
-    addButton('Show Article Preview', 'showArticlePreviewBtn fx-button secondary full-width',
+    addButton(chrome.i18n.getMessage('showArticlePreview'), 'showArticlePreviewBtn fx-button secondary full-width',
                 showPreviewFunction, 'showFullArticleBtn');
 
     // Add keyboard shortcut

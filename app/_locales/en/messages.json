@@ -50,5 +50,13 @@
   "InvalidAPI": {
     "message": "Invalid API",
     "description": "Notification message displayed when API is not valid"
+  },
+  "showFullArticle": {
+    "message" : "Show Full Article",
+    "description": "Button added in all article to show the full content of the article"
+  },
+  "showArticlePreview": {
+    "message" : "Show Article Preview",
+    "description": "Button added in all article to show the preview of the article"
   }
 }
