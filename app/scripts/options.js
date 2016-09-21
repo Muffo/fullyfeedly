@@ -22,11 +22,37 @@ function onKeyboardShortcut() {
     }, 500);
 }
 
+function arrayToString(array) {
+  var str = '';
+  if (Array.isArray(array) && array.length > 0) {
+    array.forEach(function(item) {
+      str += item.website + '=' + item.selector + '\n';
+    });
+  }
+  return str;
+}
+
+function stringToArray(str) {
+  var array = [];
+  var items = str.split('\n');
+  if (items) {
+    items.forEach(function(item) {
+      var parts = item.split('=');
+      if (parts.length == 2) {
+        array.push({website: parts[0], selector: parts[1]});
+      }
+    });
+  }
+  return array;
+}
+
 // Saves options to chrome.storage
 function saveOptions() {
     var extractionAPI = $('#extractionAPI').val();
     var mercuryAPIKey = $('#mercuryAPIKey').val();
     var enableShortcut = $('#enableShortcut').prop('checked');
+    var pageExtractor = stringToArray($('#pageExtractor').val());
+    console.log(pageExtractor);
     var status = $('#status');
 
     // Check optional paramenters
@@ -46,7 +72,8 @@ function saveOptions() {
     chrome.storage.sync.set({
         extractionAPI: extractionAPI,
         mercuryAPIKey: mercuryAPIKey,
-        enableShortcut: enableShortcut
+        enableShortcut: enableShortcut,
+        pageExtractor: pageExtractor
     }, function() {
         // Update status to let user know options were saved.
         status.text('Options saved');
@@ -62,7 +89,8 @@ function restoreOptions() {
     chrome.storage.sync.get({
         extractionAPI: 'Boilerpipe',
         mercuryAPIKey: '',
-        enableShortcut: false
+        enableShortcut: false,
+        pageExtractor: []
     }, function(items) {
         // In case the user has not switched to Mercury yet...
         if (items.extractionAPI === "Readability")
@@ -71,6 +99,7 @@ function restoreOptions() {
         $('#extractionAPI').val(items.extractionAPI);
         $('#mercuryAPIKey').val(items.mercuryAPIKey);
         $('#enableShortcut').prop('checked', items.enableShortcut);
+        $('#pageExtractor').val(arrayToString(items.pageExtractor))
         updateForm();
     });
 }

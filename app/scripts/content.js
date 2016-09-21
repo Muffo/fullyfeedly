@@ -7,7 +7,8 @@
 var options = {
     extractionAPI: 'Boilerpipe',
     mercuryAPIKey: '',
-    enableShortcut: false
+    enableShortcut: false,
+    pageExtractor: []
 };
 
 // Restores the options using the preferences stored in chrome.storage.
@@ -208,6 +209,79 @@ function boilerpipeRequest(xhr, overlay) {
     };
 }
 
+/* ===================== Article Extractor ===================== */
+/**
+ * Process the content of the article and add it to the page
+ *
+ * @param data Html of the page.
+ */
+function onArticleExtractorExtracted(data, overlay, selector) {
+
+    // Check if the API failed to extract the text
+    if (data === null || data === '') {
+        console.log('[FullyFeedly] API failed to extract the content');
+        failOverlay(chrome.i18n.getMessage('articleNotLoaded'), overlay);
+        return;
+    }
+
+    // Search the element of the page that will containt the text
+    var entryElement = document.querySelector('.u100Entry');
+    if (entryElement === null) {
+        console.log('[FullyFeedly] There is something wrong: no content element found');
+        failOverlay('contentNotFound', overlay);
+        return;
+    }
+
+    var contentElement = entryElement.querySelector('.entryBody');
+
+    // If there is an image we want to keep it
+    var articleImage = contentElement.querySelector('img');
+    if (articleImage !== null) {
+        articleImage = articleImage.cloneNode();
+    }
+
+    // Replace the preview of the article with the full text
+    var articlePreviewHTML = contentElement.innerHTML;
+    contentElement.innerHTML = data;
+
+    // Put the image back at the beginning of the article
+    if (articleImage !== null) {
+        contentElement.insertBefore(articleImage, contentElement.firstChild);
+    }
+
+    addUndoButton(articlePreviewHTML, contentElement);
+    successOverlay('done', overlay);
+}
+
+function articleExtractorRequest(xhr, overlay) {
+    return function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                onArticleExtractorExtracted(xhr.responseText, overlay);
+            } else if (xhr.status === 503) {
+                console.log('[FullyFeedly] Boilerpipe API exceeded quota');
+                failOverlay('APIOverQuota', overlay);
+            } else {
+                console.log('[FullyFeedly] Failed to load the content of the page');
+                failOverlay(chrome.i18n.getMessage('articleNotFound'), overlay);
+            }
+        }
+    };
+}
+
+function hasPageExtractorProfil(listProfils, url) {
+  if (Array.isArray(listProfils) && listProfils.length > 0) {
+    for (var i = 0; i < listProfils.length; i++) {
+      var item = listProfils[i];
+      if (url.indexOf(item.website) >= 0) {
+        return item;
+      }
+    }
+  }
+  return false;
+}
+
 /* ===================== Mercury ===================== */
 /**
  * Process the content of the article and add it to the page
@@ -308,9 +382,26 @@ function fetchPageContent() {
     // Create the asynch HTTP request
     var xhr = new XMLHttpRequest();
     var url = '';
-
+    var pageExtractorProfil = hasPageExtractorProfil(options.pageExtractor, pageUrl);
+    if (pageExtractorProfil) {
+      console.log(pageExtractorProfil);
+        chrome.runtime.sendMessage({url: pageUrl, selector: pageExtractorProfil.selector}, function(response) {
+          if (response) {
+            if (response.error) {
+              failOverlay(response.error, overlay);
+            }
+            else if (response.content) {
+              onArticleExtractorExtracted(response.content, overlay);
+            }
+          }
+          else {
+            failOverlay('APIUnknownError', overlay);
+          }
+        });
+        return;
+    }
     // Select the API to use to extract the article
-    if (options.extractionAPI === 'Boilerpipe') {
+    else if (options.extractionAPI === 'Boilerpipe') {
         // Prepare the request to Boilerpipe
         url = 'https://boilerpipe-web.appspot.com/extract?url=' +
                 encodedPageUrl +
@@ -404,5 +495,3 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
         sendResponse('done');
     }
 });
-
-
