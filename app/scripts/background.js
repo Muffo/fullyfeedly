@@ -9,7 +9,7 @@ function printResponse(response) {
     console.log('Content response:\n' + response);
 }
 
-/* Regex-pattern to check URLs against. 
+/* Regex-pattern to check URLs against.
    It matches URLs like: http[s]://[...]feedly.com[...] */
 var urlRegex = /^https?:\/\/(?:[^\.]+\.)?feedly\.com/;
 
@@ -17,7 +17,7 @@ var urlRegex = /^https?:\/\/(?:[^\.]+\.)?feedly\.com/;
 chrome.pageAction.onClicked.addListener(function(tab) {
     // ...check the URL of the active tab against our pattern and...
     if (urlRegex.test(tab.url)) {
-        // ...if it matches, send a message specifying a callback too 
+        // ...if it matches, send a message specifying a callback too
         chrome.tabs.sendMessage(tab.id, { text: 'extract_article' }, printResponse);
     }
 });
@@ -40,6 +40,36 @@ chrome.runtime.onInstalled.addListener(function() {
             }
         ]);
     });
+});
+function articleExtractorRequest(xhr, sendResponse) {
+    return function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                sendResponse({content:xhr.responseText});
+            } else if (xhr.status === 503) {
+                console.log('[FullyFeedly] Boilerpipe API exceeded quota');
+                sendResponse({error:'APIOverQuota'});
+            } else {
+                console.log('[FullyFeedly] Failed to load the content of the page');
+                sendResponse({error:'articleNotFound'});
+            }
+        }
+    };
+}
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.url) {
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = articleExtractorRequest(xhr, sendResponse);
+      xhr.open('GET', request.url, true);
+      xhr.send();
+    }
+    return true;
 });
 
 console.log('FullyFeedly: extension started');
