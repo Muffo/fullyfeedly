@@ -9,7 +9,7 @@
   },
   "articleNotLoaded": {
   	"message": "Article Not Loaded",
-  	"description": "NNotification message displayed when the article is not loaded correctly"
+  	"description": "Notification message displayed when the article is not loaded correctly"
   },
   "articleNotFound": {
   	"message": "Article Not Found",
