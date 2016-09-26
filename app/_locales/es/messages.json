@@ -1,0 +1,54 @@
+{
+  "appName": {
+    "message": "FullyFeedly",
+    "description": "El nombre de la aplicación"
+  },
+  "appDescription": {
+    "message": "Integra Readability en Feedly y muestra el contenido completo de los artículos",
+    "description": "La descripción de la aplicación"
+  },
+  "articleNotLoaded": {
+    "message": "Artículo no cargado",
+    "description": "Mensaje de notificación mostrado cuando el artículo no se ha cargado correctamente"
+  },
+  "articleNotFound": {
+    "message": "Artículo no encontrado",
+    "description": "Mensaje de notificación mostrado cuando el artículo no se ha encontrado"
+  },
+  "loading": {
+    "message": "Cargando",
+    "description": "Mensaje de notificación mostrado cuando el artículo se está cargando"
+  },
+  "done": {
+    "message": "Hecho",
+    "description": "Mensaje de notificación mostrado cuando la operación ha terminado correctamente"
+  },
+  "error": {
+    "message": "Error",
+    "description": "Mensaje de notificación mostrado cuando la operación ha fallado por un error genérico"
+  },
+  "APIOverQuota": {
+    "message": "API usada por encima de la cuota gratuita permitida",
+    "description": "Mensaje de notificación mostrado cuando el uso de la API ha excedido la cuota gratuita de uso"
+  },
+  "APIBadRequest": {
+    "message": "API usada con petición incorrecta",
+    "description": "Mensaje de notificación mostrado cuando el formato de la petición de la API no es válido"
+  },
+  "APIAuthorizationRequired": {
+    "message": "Autorización requerida para la API",
+    "description": "Mensaje de notificación mostrado cuando la API requiere autorización"
+  },
+  "APIUnknownError": {
+    "message": "Error desconocido con la API",
+    "description": "Mensaje de notificación mostrado cuando un error desconocido ha ocurrido con la API"
+  },
+  "APIMissingKey": {
+    "message": "Falta clave de la API",
+    "description": "Mensaje de notificación mostrado cuando falta la clave de la API"
+  },
+  "InvalidAPI": {
+    "message": "API inválida",
+    "description": "Mensaje de notificación mostrado cuando la API no es válida"
+  }
+}
