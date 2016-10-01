@@ -8,47 +8,55 @@
     "description": "The description of the application"
   },
   "articleNotLoaded": {
-  	"message": "Article Not Loaded",
-  	"description": "NNotification message displayed when the article is not loaded correctly"
+    "message": "Article Not Loaded",
+    "description": "Notification message displayed when the article is not loaded correctly"
   },
   "articleNotFound": {
-  	"message": "Article Not Found",
-  	"description": "Notification message displayed when the article is not found"
+    "message": "Article Not Found",
+    "description": "Notification message displayed when the article is not found"
   },
   "loading": {
-  	"message": "Loading",
-  	"description": "Notification message displayed while loading the article"
+    "message": "Loading",
+    "description": "Notification message displayed while loading the article"
   },
   "done": {
-  	"message": "Done",
-  	"description": "Notification message displayed when the operation is completed with success"
+    "message": "Done",
+    "description": "Notification message displayed when the operation is completed with success"
   },
   "error": {
     "message": "Error",
     "description": "Notification message displayed when the operation failed for generic error"
   },
   "APIOverQuota": {
-  	"message": "API Over Quota",
-  	"description": "Notification message displayed when API exceeded free usage quota"
+    "message": "API Over Quota",
+    "description": "Notification message displayed when API exceeded free usage quota"
   },
   "APIBadRequest": {
-  	"message": "API Bad Request",
-  	"description": "Notification message displayed when the API request format is not valid"
+    "message": "API Bad Request",
+    "description": "Notification message displayed when the API request format is not valid"
   },
   "APIAuthorizationRequired": {
-  	"message": "API Authorization Required",
-  	"description": "Notification message displayed when API requires authorization"
+    "message": "API Authorization Required",
+    "description": "Notification message displayed when API requires authorization"
   },
   "APIUnknownError": {
-  	"message": "API Unknown Error",
-  	"description": "Notification message displayed when the an unknown error occurred"
+    "message": "API Unknown Error",
+    "description": "Notification message displayed when the an unknown error occurred"
   },
   "APIMissingKey": {
-  	"message": "API Missing Key",
-  	"description": "Notification message displayed when the key for API is missing"
+    "message": "API Missing Key",
+    "description": "Notification message displayed when the key for API is missing"
   },
   "InvalidAPI": {
     "message": "Invalid API",
     "description": "Notification message displayed when API is not valid"
+  },
+  "showFullArticle": {
+    "message" : "Show Full Article",
+    "description": "Button added in all article to show the full content of the article"
+  },
+  "showArticlePreview": {
+    "message" : "Show Article Preview",
+    "description": "Button added in all article to show the preview of the article"
   }
 }
