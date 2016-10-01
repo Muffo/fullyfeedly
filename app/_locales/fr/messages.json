@@ -1,0 +1,126 @@
+{
+  "appName": {
+    "message": "FullyFeedly",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Ajoute de la lisibilité à Feedly et affiche le contenu intégral des articles",
+    "description": "The description of the application"
+  },
+  "articleNotLoaded": {
+  	"message": "Article non chargée",
+  	"description": "NNotification message displayed when the article is not loaded correctly"
+  },
+  "articleNotFound": {
+  	"message": "Article non trouvée",
+  	"description": "Notification message displayed when the article is not found"
+  },
+  "loading": {
+  	"message": "Chargement",
+  	"description": "Notification message displayed while loading the article"
+  },
+  "done": {
+  	"message": "Terminé",
+  	"description": "Notification message displayed when the operation is completed with success"
+  },
+  "error": {
+    "message": "Erreur",
+    "description": "Notification message displayed when the operation failed for generic error"
+  },
+  "APIOverQuota": {
+  	"message": "Le service a atteint son seuil maximal de chargement d'article pour la journée, attendez 24 heures pour l'utiliser de nouveau",
+  	"description": "Notification message displayed when API exceeded free usage quota"
+  },
+  "APIBadRequest": {
+  	"message": "Mauvaise requete à l'API Readability, le service a peut être changer prévenez le responsable de cette extension.",
+  	"description": "Notification message displayed when the API request format is not valid"
+  },
+  "APIAuthorizationRequired": {
+  	"message": "Authentification requise à l'API Readability, le service a peut être changer prévenez le responsable de cette extension.",
+  	"description": "Notification message displayed when API requires authorization"
+  },
+  "APIUnknownError": {
+  	"message": "API Erreur inconnue, prévenez le responsable de cette extension.",
+  	"description": "Notification message displayed when the an unknown error occurred"
+  },
+  "APIMissingKey": {
+  	"message": "La clé Readability n'a pas été saisie, aller dans les options pour la renseigner",
+  	"description": "Notification message displayed when the key for API is missing"
+  },
+  "InvalidAPI": {
+    "message": "API Invalide, le service a peut être changer prévenez le responsable de cette extension.",
+    "description": "Notification message displayed when API is not valid"
+  },
+  "showFullArticle": {
+    "message" : "Voir l'article complet",
+    "description": "Button added in all article to show the full content of the article"
+  },
+  "showArticlePreview": {
+    "message" : "Retourner à la prévisualisation",
+    "description": "Button added in all article to show the preview of the article"
+  },
+  "optionsArticleExtractionAPI": {
+    "message": "Type d'extraction des articles",
+    "description": "Label in the option page for select type of API"
+  },
+  "optionsReadabilityApiKey": {
+    "message": "Clé de l'API Readability",
+    "description": "Label in the option page for set the readbility api key"
+  },
+  "optionsHelp": {
+    "message": "Aide",
+    "description": "Help link"
+  },
+  "optionsTryMe": {
+    "message": "Essayez-moi",
+    "description": "Try me text for keyboard shortcut"
+  },
+  "optionsSave": {
+    "message": "Enregistrer",
+    "description": "Save options button"
+  },
+  "optionsEnableKeyboardShortcut": {
+    "message": "Activer le racourcis clavier",
+    "description": "Label in the option page for activate the keyboard shortcut"
+  },
+  "optionsDevelopedBy": {
+    "message" : "Développé par",
+    "description": "Text in the buttom page Developped by"
+  },
+  "optionsClose": {
+    "message": "Fermer",
+    "description": "Close the help popup"
+  },
+  "optionsSetupReadbilityApiKey": {
+    "message" : "Créez votre clé d'API Readabilité en deux étapes simples.",
+    "description": "Readability Help / first line : Setup your Readability API key in two easy steps"
+  },
+  "optionsStepOne": {
+    "message" : "1. Créez un compte gratuit Readability",
+    "description": "Readability Help / first step / Title : 1. Create a free Readability account"
+  },
+  "optionsVisit": {
+    "message" : "Visitez le site",
+    "description": "Readability Help / first step : Visit"
+  },
+  "optionsCreateFreeAccount": {
+    "message" : "et créez vous un compte gratuit.",
+    "description": "Readability Help / first step : and create your free account."
+  },
+  "optionsLoginFacebook": {
+    "message" : "Vous pouvez aussi vous connecter en utilisant Facebook.",
+    "description": "Readability Help / first step / Facebook : You can also login using Facebook."
+  },
+  "optionsStepTwo": {
+    "message" : "2. Récupérez votre clé d'API.",
+    "description": "Readability Help / second step / Title : 2. Get your API key"
+  },
+  "optionsYourApiKeyAvailableIn": {
+    "message" : "Votre clé personnel d'API est disponible dans les",
+    "description": "Readability Help / second step / Text : Your personal API key is available in your"
+  },
+  "optionsAccountSettings": {
+    "message" : "Propriétés de votre compte (Settings/Account)",
+    "description": "Readability Help / second step / Link : account settings."
+  }
+}

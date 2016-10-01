@@ -1,50 +1,126 @@
 {
   "appName": {
     "message": "FullyFeedly",
-    "description": "The name of the application"
+    "description": "Nome dell'applicazione"
   },
   "appDescription": {
     "message": "Integra Readability in Feedly e mostra il contenuto completo degli articoli",
-    "description": "The description of the application"
+    "description": "Descrizione dell'applicazione"
   },
   "articleNotLoaded": {
-  	"message": "Articolo Non Caricato",
-  	"description": "Notification message displayed when the article is not loaded correctly"
+    "message": "Articolo Non Caricato",
+    "description": "Messaggio di notifica mostrato quando l'articolo non è caricato correttamente"
   },
   "articleNotFound": {
-  	"message": "Articolo Non Trovato",
-  	"description": "Notification message displayed when the article is not found"
+    "message": "Articolo Non Trovato",
+    "description": "Messaggio di notifica mostrato quando l'articolo non è stato trovato"
   },
   "loading": {
-  	"message": "Caricamento",
-  	"description": "Notification message displayed while loading the article"
+    "message": "Caricamento",
+    "description": "Messaggio di notifica mostrato durante il caricamento dell'articolo"
   },
   "done": {
-  	"message": "Fatto",
-  	"description": "Notification message displayed when the operation is completed with success"
+    "message": "Fatto",
+    "description": "Messaggio di notifica mostrato quando l'operazione è completata con successo"
   },
   "error": {
     "message": "Errore",
-    "description": "Notification message displayed when the operation failed for generic error"
+    "description": "Messaggio di notifica mostrato quando l'operazione non è terminata correttamente"
   },
   "APIOverQuota": {
-  	"message": "API Over Quota",
-  	"description": "Notification message displayed when API exceeded free usage quota"
+    "message": "API Over Quota",
+    "description": "Messaggio di notifica mostrato quando l'API ha superato la quota gratuita"
   },
   "APIBadRequest": {
-  	"message": "API Bad Request",
-  	"description": "Notification message displayed when the API request format is not valid"
+    "message": "API Bad Request",
+    "description": "Messaggio di notifica mostrato quando il formato dell'API request non è valido"
   },
   "APIAuthorizationRequired": {
-  	"message": "API Autorizzazione Richiesta",
-  	"description": "Notification message displayed when API requires authorization"
+    "message": "API Autorizzazione Richiesta",
+    "description": "Messaggio di notifica mostrato quando l'API richede auntenticazione"
   },
   "APIUnknownError": {
-  	"message": "API Errore Sconosciuto",
-  	"description": "Notification message displayed when the an unknown error occurred"
+    "message": "API Errore Sconosciuto",
+    "description": "Messaggio di notifica mostrato in caso di errore sconosciuto"
   },
   "APIMissingKey": {
-  	"message": "Chiave API Mancante",
-  	"description": "Notification message displayed when the key for API is missing"
+    "message": "Chiave API Mancante",
+    "description": "Messaggio di notifica mostrato quando la chiave per l'API non è presente"
+  },
+  "InvalidAPI": {
+    "message": "API Non valida",
+    "description": "Messaggio di notifica mostrato quando l'API non è valida"
+  },
+  "showFullArticle": {
+    "message" : "Mostra Articolo Completo",
+    "description": "Bottone aggiunto al termine della pagina per mostrare l'articolo completo"
+  },
+  "showArticlePreview": {
+    "message" : "Mostra Anteprima Articolo",
+    "description": "Bottone aggiunto al termine della pagina per mostrare l'anteprima dell'articolo"
+  },
+  "optionsArticleExtractionAPI": {
+    "message": "API per l'elaborazione dell'articolo",
+    "description": "Label in the option page for select type of API"
+  },
+  "optionsReadabilityApiKey": {
+    "message": "Chiave per Readability API",
+    "description": "Label in the option page for set the readbility api key"
+  },
+  "optionsHelp": {
+    "message": "Aiuto",
+    "description": "Help link"
+  },
+  "optionsTryMe": {
+    "message": "Provami",
+    "description": "Try me text for keyboard shortcut"
+  },
+  "optionsSave": {
+    "message": "Salva",
+    "description": "Save options button"
+  },
+  "optionsEnableKeyboardShortcut": {
+    "message": "Attiva scorciatoie da tastiera",
+    "description": "Label in the option page for activate the keyboard shortcut"
+  },
+  "optionsDevelopedBy": {
+    "message" : "Sviluppato da",
+    "description": "Text in the buttom page Developped by"
+  },
+  "optionsClose": {
+    "message": "Chiudi",
+    "description": "Close the help popup"
+  },
+  "optionsSetupReadbilityApiKey": {
+    "message" : "Configura la tua Readability Key in due semplici step",
+    "description": "Readability Help / first line : Setup your Readability API key in two easy steps"
+  },
+  "optionsStepOne": {
+    "message" : "1. Crea un account gratuito per Readability",
+    "description": "Readability Help / first step / Title : 1. Create a free Readability account"
+  },
+  "optionsVisit": {
+    "message" : "Visita il sito",
+    "description": "Readability Help / first step : Visit"
+  },
+  "optionsCreateFreeAccount": {
+    "message" : "e crea un account gratuito",
+    "description": "Readability Help / first step : and create your free account."
+  },
+  "optionsLoginFacebook": {
+    "message" : "E' anche possibile effettuare il login utilizzando Facebook",
+    "description": "Readability Help / first step / Facebook : You can also login using Facebook."
+  },
+  "optionsStepTwo": {
+    "message" : "2. Recuperate la vostra API Key",
+    "description": "Readability Help / second step / Title : 2. Get your API key"
+  },
+  "optionsYourApiKeyAvailableIn": {
+    "message" : "La vostra key personale è disponibile nelle",
+    "description": "Readability Help / second step / Text : Your personal API key is available in your"
+  },
+  "optionsAccountSettings": {
+    "message" : "impostazioni account (Settings/Account)",
+    "description": "Readability Help / second step / Link : account settings."
   }
 }
