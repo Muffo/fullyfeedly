@@ -18,43 +18,43 @@
                 <div class="col-md-8 col-md-offset-2">
                     <div class="jumbotron">
                         <img src="images/icon-128.png" class="pull-right" id="icon128"/>
-                        <h1>FullyFeedly</h1>
-                        <p>Show the full content of the articles in Feedly.com</p>
+                        <h1 data-message="appName">FullyFeedly</h1>
+                        <p data-message="appDescription">Show the full content of the articles in Feedly.com</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="form-group">
-                        <label for="extractionAPI">Article extraction API</label>
+                        <label for="extractionAPI" data-message="optionsArticleExtractionAPI">Article extraction API</label>
                             <select class="form-control input-lg" id="extractionAPI">
                             <option>Boilerpipe</option>
                             <option>Readability</option>
                         </select>
                     </div>
                     <div class="form-group" id="readabilityKeyForm">
-                        <label for="readabilityAPIKey">Readability API key </label>
-                        <a class="pull-right" data-toggle="modal" data-target="#readabilityHelp">
+                        <label for="readabilityAPIKey" data-message="optionsReadabilityApiKey">Readability API key </label>
+                        <a class="pull-right" data-toggle="modal" data-target="#readabilityHelp" href="#" data-message="optionsHelp">
                             Help
                         </a>
                         <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" id="enableShortcut"> Enable keyboard shortcut <code>f f</code>
+                            <input type="checkbox" id="enableShortcut"> <span data-message="optionsEnableKeyboardShortcut">Enable keyboard shortcut</span> <code>f f</code>
                         </label>
-                        <span class="pull-right" id="tryShortcut">
+                        <span class="pull-right" id="tryShortcut" data-message="optionsTryMe">
                             Try me
                         </span>
                     </div>
-                    <button class="btn btn-success" id="save">Save</button>
+                    <button class="btn btn-success" id="save" data-message="optionsSave">Save</button>
                     <span id="status"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <hr/>
-                    <p style="text-align: right">Developed by 
+                    <p style="text-align: right"><span data-message="optionsDevelopedBy">Developed by</span>
                         <a href="http://linkedin.com/in/andreagrandi87">
                             <img src="images/linkedin_btn_20x15.png"/>Andrea Grandi
                         </a>
@@ -69,22 +69,23 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">
                             <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
+                            <span class="sr-only" data-message="optionsClose">Close</span>
                         </button>
                         <h3 class="modal-title" id="readabilityHelpTitle">
                             <img src="images/readability-logo.png" style="height: 30px;" />
-                            Readability API key
+                            <span data-message="optionsReadabilityApiKey">Readability API key</span>
                         </h3>
                     </div>
                     <div class="modal-body">
-                        Setup your Readability API key in two easy steps
-                        <h4>1. Create a free Readability account</h4>
-                        Visit <a href="http://readability.com" target="_blank">Readability.com</a> and create your free account.</br>
-                        You can also login using Facebook. 
+                        <span data-message="optionsSetupReadbilityApiKey">Setup your Readability API key in two easy steps</span>:
+                        <h4 data-message="optionsStepOne">1. Create a free Readability account</h4>
+                        <span data-message="optionsVisit">Visit</span> <a href="http://readability.com" target="_blank">Readability.com</a>
+                        <span data-message="optionsCreateFreeAccount">and create your free account</span>.</br>
+                        <span data-message="optionsLoginFacebook">You can also login using Facebook</span>.</span>
 
-                        <h4>2. Get your API key </h4>
-                        Your personal API key is available in your
-                        <a href="https://www.readability.com/settings/account" target="_blank">account settings.</a></br>
+                        <h4 data-message="optionsStepTwo">2. Get your API key </h4>
+                        <span data-message="optionsYourApiKeyAvailableIn">Your personal API key is available in your</span>
+                        <a href="https://www.readability.com/settings/account" target="_blank" data-message="optionsAccountSettings">account settings</a>.</br>
                         <img src="images/readability-help.png" />
                     </div>
                 </div>

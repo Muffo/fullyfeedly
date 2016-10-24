@@ -71,8 +71,17 @@ function restoreOptions() {
     });
 }
 
-
+function translateOptions() {
+  var objects = document.getElementsByTagName('*'), i;
+  for(i = 0; i < objects.length; i++) {
+    if (objects[i].dataset && objects[i].dataset.message) {
+      var html = chrome.i18n.getMessage(objects[i].dataset.message);
+      if (html) objects[i].innerHTML = chrome.i18n.getMessage(objects[i].dataset.message);
+    }
+  }
+}
 document.addEventListener('DOMContentLoaded', restoreOptions);
+document.addEventListener('DOMContentLoaded', translateOptions);
 $('#save').click(saveOptions);
 $('#extractionAPI').change(updateForm);
 
