@@ -76,7 +76,9 @@ function translateOptions() {
   for(i = 0; i < objects.length; i++) {
     if (objects[i].dataset && objects[i].dataset.message) {
       var html = chrome.i18n.getMessage(objects[i].dataset.message);
-      if (html) objects[i].innerHTML = chrome.i18n.getMessage(objects[i].dataset.message);
+      if (html) {
+          objects[i].innerHTML = chrome.i18n.getMessage(objects[i].dataset.message);
+      }
     }
   }
 }
