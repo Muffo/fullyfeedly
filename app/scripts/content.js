@@ -180,7 +180,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     contentElement.innerHTML = articleContent;
 
     // Clear image styles to fix formatting of images with class/style/width information in article markup
-    Array.prototype.slice.call(document.querySelectorAll('img')).forEach(function(el) {
+    Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
         el.removeAttribute('class');
         el.removeAttribute('width');
         el.setAttribute('style', 'max-width:100%;');
@@ -244,7 +244,7 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     contentElement.innerHTML = articleContent;
 
     // Clear image styles to fix formatting of images with class/style/width information in article markup
-    Array.prototype.slice.call(document.querySelectorAll('img')).forEach(function(el) {
+    Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
         el.removeAttribute('class');
         el.removeAttribute('width');
         el.setAttribute('style', 'max-width:100%;');
