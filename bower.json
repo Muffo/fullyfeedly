@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "bootstrap": "~3.2.0",
-    "mousetrap": "~1.5.2"
+    "mousetrap": "~1.5.2",
+    "spin.js": "spinjs#^2.3.2"
   },
   "devDependencies": {}
 }
