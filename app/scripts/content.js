@@ -176,13 +176,16 @@ function onBoilerpipeArticleExtracted(data, overlay) {
 
     // Replace the preview of the article with the full text
     var articlePreviewHTML = contentElement.innerHTML;
-    contentElement.innerText = articleContent;
+    contentElement.innerHTML = articleContent;
 
-    // Put the image back at the beginning of the article
-    if (articleImage !== null) {
-        contentElement.insertBefore(articleImage, contentElement.firstChild);
-    }
+    // Clear image styles to fix formatting of images with class/style/width information in article markup
+    Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
+        el.removeAttribute('class');
+        el.removeAttribute('width');
+        el.setAttribute('style', 'max-width:100%;');
+    });
 
+    //Toggle Success Overlay
     addUndoButton(articlePreviewHTML);
     successOverlay('done', overlay);
 }
@@ -238,6 +241,15 @@ function onReadabilityArticleExtracted(data, overlay) {
     // Replace the preview of the article with the full text
     var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
+
+    // Clear image styles to fix formatting of images with class/style/width information in article markup
+    Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
+        el.removeAttribute('class');
+        el.removeAttribute('width');
+        el.setAttribute('style', 'max-width:100%;');
+    });
+
+    //Toggle success overlay
     successOverlay('done', overlay);
 
     // Put the image back at the beginning of the article
