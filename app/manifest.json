@@ -29,12 +29,12 @@
             ],
             "js": [
                 "bower_components/spin.js/spin.js",
-                "libs/iosOverlay/iosOverlay.js",
+                "bower_components/iosoverlay/js/iosOverlay.js",
                 "bower_components/mousetrap/mousetrap.js",
                 "scripts/content.js"
             ],
             "css": [
-                "libs/iosOverlay/iosOverlay.css",
+                "bower_components/iosoverlay/css/iosOverlay.css",
                 "styles/content.css"
             ]
         }
