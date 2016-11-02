@@ -7,6 +7,7 @@
 var options = {
     extractionAPI: 'Boilerpipe',
     readabilityAPIKey: '',
+    mercuryAPIKey: '',
     enableShortcut: false
 };
 
@@ -176,13 +177,16 @@ function onBoilerpipeArticleExtracted(data, overlay) {
 
     // Replace the preview of the article with the full text
     var articlePreviewHTML = contentElement.innerHTML;
-    contentElement.innerText = articleContent;
+    contentElement.innerHTML = articleContent;
 
-    // Put the image back at the beginning of the article
-    if (articleImage !== null) {
-        contentElement.insertBefore(articleImage, contentElement.firstChild);
-    }
+    // Clear image styles to fix formatting of images with class/style/width information in article markup
+    Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
+        el.removeAttribute('class');
+        el.removeAttribute('width');
+        el.setAttribute('style', 'max-width:100%;');
+    });
 
+    //Toggle Success Overlay
     addUndoButton(articlePreviewHTML);
     successOverlay('done', overlay);
 }
@@ -205,11 +209,11 @@ function boilerpipeRequest(xhr, overlay) {
     };
 }
 
-/* ===================== Readability ===================== */
+/* ===================== Readability/Mercury ===================== */
 /**
  * Process the content of the article and add it to the page
  */
-function onReadabilityArticleExtracted(data, overlay) {
+function onMercuryReadabilityArticleExtracted(data, overlay) {
 
     // Check if the API failed to extract the text
     if (data.content === null) {
@@ -238,6 +242,15 @@ function onReadabilityArticleExtracted(data, overlay) {
     // Replace the preview of the article with the full text
     var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
+
+    // Clear image styles to fix formatting of images with class/style/width information in article markup
+    Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
+        el.removeAttribute('class');
+        el.removeAttribute('width');
+        el.setAttribute('style', 'max-width:100%;');
+    });
+
+    //Toggle success overlay
     successOverlay('done', overlay);
 
     // Put the image back at the beginning of the article
@@ -248,19 +261,20 @@ function onReadabilityArticleExtracted(data, overlay) {
     addUndoButton(articlePreviewHTML);
 }
 
+/* ===================== Readability ===================== */
 function readabilityRequest(xhr, overlay) {
     return function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 // Operation succeded
                 var data = JSON.parse(xhr.responseText);
-                onReadabilityArticleExtracted(data, overlay);
+                onMercuryReadabilityArticleExtracted(data, overlay);
             } else if (xhr.status === 400) {
                 console.log('[FullyFeedly] Readability API Bad request: ' +
                             'The server could not understand your request. ' +
                             'Verify that request parameters (and content, if any) are valid.');
                 failOverlay('APIBadRequest', overlay);
-            } else if (xhr.status === 400) {
+            } else if (xhr.status === 403) {
                 console.log('[FullyFeedly] Readability API Authorization Required: ' +
                             'Authentication failed or was not provided.');
                 failOverlay('APIAuthorizationRequired', overlay);
@@ -272,6 +286,30 @@ function readabilityRequest(xhr, overlay) {
     };
 }
 
+/* ===================== Mercury ===================== */
+function mercuryRequest(xhr, overlay) {
+    return function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Operation succeded
+                var data = JSON.parse(xhr.responseText);
+                onMercuryReadabilityArticleExtracted(data, overlay);
+            } else if (xhr.status === 400) {
+                console.log('[FullyFeedly] Mercury API Bad request: ' +
+                            'The server could not understand your request. ' +
+                            'Verify that request parameters (and content, if any) are valid.');
+                failOverlay('APIBadRequest', overlay);
+            } else if (xhr.status === 403) {
+                console.log('[FullyFeedly] Mercury API Authorization Required: ' +
+                            'Authentication failed or was not provided.');
+                failOverlay('APIAuthorizationRequired', overlay);
+            } else {
+                console.log('[FullyFeedly] Mercury API Unknown error');
+                failOverlay('APIUnknownError', overlay);
+            }
+        }
+    };
+}
 
 /**
  * Performs an XMLHttpRequest to boilerpipe to get the content of the artile.
@@ -300,7 +338,7 @@ function fetchPageContent() {
     // Select the API to use to extract the article
     if (options.extractionAPI === 'Boilerpipe') {
         // Prepare the request to Boilerpipe
-        url = 'http://boilerpipe-web.appspot.com/extract?url=' +
+        url = 'https://boilerpipe-web.appspot.com/extract?url=' +
                 encodedPageUrl +
                 '&extractor=ArticleExtractor&output=json&extractImages=';
 
@@ -319,11 +357,24 @@ function fetchPageContent() {
 
         xhr.onreadystatechange = readabilityRequest(xhr, overlay);
     }
+    else if (options.extractionAPI === 'Mercury') {
+        if (options.mercuryAPIKey === '') {
+            failOverlay('APIMissingKey', overlay);
+            return;
+        }
+
+        url = 'https://mercury.postlight.com/parser?url='+ encodedPageUrl;
+
+        xhr.onreadystatechange = mercuryRequest(xhr, overlay);
+    }
     else {
         failOverlay('InvalidAPI', overlay);
         return;
     }
     xhr.open('GET', url, true);
+    if (options.extractionAPI === 'Mercury' && options.mercuryAPIKey !== '') {
+        xhr.setRequestHeader('x-api-key', options.mercuryAPIKey);
+    }
     xhr.send();
 }
 

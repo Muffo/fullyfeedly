@@ -3,7 +3,7 @@ body {
 }
 
 .jumbotron h1 {
-    font-weight: bold;   
+    font-weight: bold;
 }
 
 #tryShortcut {
@@ -13,4 +13,20 @@ body {
 
 #icon128 {
     margin: 10px 10px 0px 0px;
+}
+
+#mercuryHelp .close {
+    color: #fff;
+}
+
+#postlightLogo {
+    position: absolute;
+    width: 46px;
+    height: 35px;
+    background: url('../images/postlight-labs-logo.svg') no-repeat 50%;
+    background-size: contain;
+}
+
+#mercuryHelpTitle {
+    padding-left: 50px;
 }
