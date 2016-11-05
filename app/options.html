@@ -29,6 +29,7 @@
                         <label for="extractionAPI" data-message="optionsArticleExtractionAPI">Article extraction API</label>
                             <select class="form-control input-lg" id="extractionAPI">
                             <option>Boilerpipe</option>
+                            <option>Mercury</option>
                             <option>Readability</option>
                         </select>
                     </div>
@@ -38,6 +39,13 @@
                             Help
                         </a>
                         <input type="text" class="form-control input-lg" id="readabilityAPIKey" placeholder="Readability API Key">
+                    </div>
+                    <div class="form-group" id="mercuryKeyForm">
+                        <label for="mercuryAPIKey" data-message="optionsMercuryApiKey">Mercury API key </label>
+                        <a class="pull-right" data-toggle="modal" data-target="#mercuryHelp" href="#" data-message="optionsHelp">
+                            Help
+                        </a>
+                        <input type="text" class="form-control input-lg" id="mercuryAPIKey" placeholder="Mercury API Key">
                     </div>
                     <div class="checkbox">
                         <label>
@@ -91,7 +99,34 @@
                 </div>
             </div>
         </div>
+        <!-- Mercury help div -->
+        <div class="modal fade" id="mercuryHelp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" > <!-- style="background-color:#000;color:#777" -->
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only" data-message="optionsClose">Close</span>
+                        </button>
+                        <div id="postlightLogo"></div>
+                        <h3 class="modal-title" id="mercuryHelpTitle">
+                            <span data-message="optionsMercuryApiKey">Mercury API key</span>
+                        </h3>
+                    </div>
+                    <div class="modal-body">
+                        <span data-message="optionsSetupMercuryApiKey">Setup your Mercury API key in two easy steps</span>:
+                        <h4 data-message="optionsMercuryStepOne">1. Create a free Mercury API account</h4>
+                        <span data-message="optionsMercuryVisit">Visit</span> <a href="https://mercury.postlight.com/web-parser/" target="_blank">mercury.postlight.com/web-parser/</a>
+                        <span data-message="optionsMercuryCreateFreeAccount">and create your free account</span>.</br>
+                        <span data-message="optionsLoginGoogle">You can also login using Google</span>.</span>
 
+                        <h4 data-message="optionsMercuryStepTwo">2. Get your API key </h4>
+                        <span data-message="optionsMercuryYourApiKeyAvailableIn">Your personal API key is available immediately after creating or logging in to your account on the main page.</span>
+                        <img src="images/mercury-help.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Github ribbon -->
         <a href="https://github.com/muffo/fullyfeedly" target="_blank">
             <img style="position: absolute; top: 0; right: 0; border: 0;" src="images/forkmeongithub.png" alt="Fork me on GitHub">
