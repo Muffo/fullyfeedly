@@ -186,7 +186,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
         el.setAttribute('style', 'max-width:100%;');
     });
 
-    //Toggle Success Overlay
+    // Toggle Success Overlay
     addUndoButton(articlePreviewHTML);
     successOverlay('done', overlay);
 }
@@ -250,7 +250,7 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
         el.setAttribute('style', 'max-width:100%;');
     });
 
-    //Toggle success overlay
+    // Toggle success overlay
     successOverlay('done', overlay);
 
     // Put the image back at the beginning of the article
