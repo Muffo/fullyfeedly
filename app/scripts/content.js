@@ -162,7 +162,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     var articleContent = data.response.content;
 
     // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
+    var contentElement = document.querySelector('.entryBody .content');
     if (contentElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
         failOverlay('contentNotFound', overlay);
@@ -226,7 +226,7 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     var articleContent = data.content;
 
     // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
+    var contentElement = document.querySelector('.entryBody .content');
     if (contentElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
         failOverlay('contentNotFound', overlay);
@@ -386,7 +386,7 @@ function addUndoButton(articlePreviewHTML) {
     function getShowPreviewFunction(articlePreviewHTML) {
         return function() {
             // Search the element with the content
-            var contentElement = document.querySelector('.content');
+            var contentElement = document.querySelector('.entryBody .content');
             if (contentElement === null) {
                 console.log('[FullyFeedly] There is something wrong: no content element found');
                 failOverlay('error');
