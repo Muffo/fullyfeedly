@@ -386,7 +386,7 @@ function addUndoButton(articlePreviewHTML) {
     function getShowPreviewFunction(articlePreviewHTML) {
         return function() {
             // Search the element with the content
-            var contentElement = document.querySelector('.content');
+            var contentElement = document.querySelector('.entryBody .content');
             if (contentElement === null) {
                 console.log('[FullyFeedly] There is something wrong: no content element found');
                 failOverlay('error');
