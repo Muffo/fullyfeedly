@@ -12,6 +12,13 @@ function updateForm() {
     else {
         $('#readabilityKeyForm').hide();
     }
+
+    if (extractionAPI === 'Mercury') {
+        $('#mercuryKeyForm').show();
+    }
+    else {
+        $('#mercuryKeyForm').hide();
+    }
 }
 
 // Show a visual confirmation to the user
@@ -26,6 +33,7 @@ function onKeyboardShortcut() {
 function saveOptions() {
     var extractionAPI = $('#extractionAPI').val();
     var readabilityAPIKey = $('#readabilityAPIKey').val();
+    var mercuryAPIKey = $('#mercuryAPIKey').val();
     var enableShortcut = $('#enableShortcut').prop('checked');
     var status = $('#status');
 
@@ -42,10 +50,23 @@ function saveOptions() {
             return;
         }
     }
+    if (extractionAPI === 'Mercury') {
+        if (mercuryAPIKey === '') {
+            // Show the error message
+            status.text('Missing Mercury API key');
+            $('#mercuryKeyForm').addClass('has-error');
+            setTimeout(function() {
+                status.text('');
+                $('#mercuryKeyForm').removeClass('has-error');
+            }, 2000);
+            return;
+        }
+    }
 
     chrome.storage.sync.set({
         extractionAPI: extractionAPI,
         readabilityAPIKey: readabilityAPIKey,
+        mercuryAPIKey: mercuryAPIKey,
         enableShortcut: enableShortcut
     }, function() {
         // Update status to let user know options were saved.
@@ -62,10 +83,12 @@ function restoreOptions() {
     chrome.storage.sync.get({
         extractionAPI: 'Boilerpipe',
         readabilityAPIKey: '',
+        mercuryAPIKey: '',
         enableShortcut: false
     }, function(items) {
         $('#extractionAPI').val(items.extractionAPI);
         $('#readabilityAPIKey').val(items.readabilityAPIKey);
+        $('#mercuryAPIKey').val(items.mercuryAPIKey);
         $('#enableShortcut').prop('checked', items.enableShortcut);
         updateForm();
     });
