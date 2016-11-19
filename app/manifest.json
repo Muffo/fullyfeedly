@@ -41,7 +41,8 @@
     ],
     "web_accessible_resources": [
         "images/cross.png",
-        "images/check.png"
+        "images/check.png",
+        "options.html"
     ],
     "permissions": [
         "declarativeContent",
