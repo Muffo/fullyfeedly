@@ -1,3 +1,17 @@
+.migrationWarning {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 10px;
+    border-color: #a94442;
+    color: #333333;
+    font-family: sans-serif;
+}
+
+.migrationWarning b {
+    color: #a94442 !important;
+}
+
 .showFullArticleBtn, .showArticlePreviewBtn {
 	padding: 14px 20px 14px 20px;
 	font-size: 14px;

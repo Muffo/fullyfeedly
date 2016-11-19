@@ -243,6 +243,21 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
 
+    // Add warning message if user is still using the Readability API
+    if (options.extractionAPI === 'Readability') {
+        var optionsUrl = chrome.extension.getURL("options.html");
+        var warningDiv = '<div class="migrationWarning"> \
+            <b>FullyFeedly: Readability API Migration</b><br/> \
+            The Readability API you are currently using will stop working on the 10th of December. See the \
+            <a href="https://medium.com/@readability/the-readability-bookmarking-service-will-shut-down-on-september-30-2016-1641cc18e02b#.e2aunrmow" \
+            target="_blank"> official announcement</a>.<br/> \
+            Please, go to the <a href="' + optionsUrl + '" target="_blank">options page of FullyFeedly</a> and select\
+            the new <a href="https://mercury.postlight.com/web-parser/" target="_blank">Mercury API</a>.<br/>\
+            Thanks a lot for using FullyFeedly :) \
+        </div>';
+        contentElement.innerHTML = warningDiv + contentElement.innerHTML;
+    }
+
     // Clear image styles to fix formatting of images with class/style/width information in article markup
     Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
         el.removeAttribute('class');
