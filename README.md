@@ -21,18 +21,16 @@ You can also enable the keyboard shortcut from the options page and display the 
 
 ## Developers
 
-Pull requests are very welcome!!
+Pull requests are very welcome!! :+1:
+
+If you want to help read the [contributors guidelines](https://github.com/Muffo/fullyfeedly/blob/master/CONTRIBUTING.md) of this repository.
+
 
 Thanks a lot to the following developers for their help and contributions:
 
 * [@patou](https://github.com/patou)
 * [@churchs19](https://github.com/churchs19)
 * [@pamarcos](https://github.com/pamarcos)
-
-
-### Getting started
-
-Clone the repository and follow [this guide](http://minimul.com/developing-a-chrome-extension-with-yeoman.html) to build and debug the extension.
 
 
 ### External API
