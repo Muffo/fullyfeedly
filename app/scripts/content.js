@@ -162,7 +162,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     var articleContent = data.response.content;
 
     // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
+    var contentElement = document.querySelector('.entryBody .content');
     if (contentElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
         failOverlay('contentNotFound', overlay);
@@ -226,7 +226,7 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     var articleContent = data.content;
 
     // Search the element of the page that will containt the text
-    var contentElement = document.querySelector('.content');
+    var contentElement = document.querySelector('.entryBody .content');
     if (contentElement === null) {
         console.log('[FullyFeedly] There is something wrong: no content element found');
         failOverlay('contentNotFound', overlay);
@@ -242,6 +242,21 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     // Replace the preview of the article with the full text
     var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
+
+    // Add warning message if user is still using the Readability API
+    if (options.extractionAPI === 'Readability') {
+        var optionsUrl = chrome.extension.getURL("options.html");
+        var warningDiv = '<div class="migrationWarning"> \
+            <b>FullyFeedly: Readability API Migration</b><br/> \
+            The Readability API you are currently using will stop working on the 10th of December. See the \
+            <a href="https://medium.com/@readability/the-readability-bookmarking-service-will-shut-down-on-september-30-2016-1641cc18e02b#.e2aunrmow" \
+            target="_blank"> official announcement</a>.<br/> \
+            Please, go to the <a href="' + optionsUrl + '" target="_blank">options page of FullyFeedly</a> and select\
+            the new <a href="https://mercury.postlight.com/web-parser/" target="_blank">Mercury API</a>.<br/>\
+            Thanks a lot for using FullyFeedly :) \
+        </div>';
+        contentElement.innerHTML = warningDiv + contentElement.innerHTML;
+    }
 
     // Clear image styles to fix formatting of images with class/style/width information in article markup
     Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
@@ -386,7 +401,7 @@ function addUndoButton(articlePreviewHTML) {
     function getShowPreviewFunction(articlePreviewHTML) {
         return function() {
             // Search the element with the content
-            var contentElement = document.querySelector('.content');
+            var contentElement = document.querySelector('.entryBody .content');
             if (contentElement === null) {
                 console.log('[FullyFeedly] There is something wrong: no content element found');
                 failOverlay('error');
