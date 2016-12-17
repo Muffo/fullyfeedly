@@ -4,7 +4,7 @@
     "description": "Nome dell'applicazione"
   },
   "appDescription": {
-    "message": "Integra Readability in Feedly e mostra il contenuto completo degli articoli",
+    "message": "Mostra il contenuto completo degli articoli in Feedly.com",
     "description": "Descrizione dell'applicazione"
   },
   "articleNotLoaded": {
@@ -63,8 +63,8 @@
     "message": "API per l'elaborazione dell'articolo",
     "description": "Label in the option page for select type of API"
   },
-  "optionsReadabilityApiKey": {
-    "message": "Chiave per Readability API",
+  "optionsMercuryApiKey": {
+    "message": "Chiave per Mercury API",
     "description": "Label in the option page for set the readbility api key"
   },
   "optionsHelp": {
@@ -92,35 +92,35 @@
     "description": "Close the help popup"
   },
   "optionsSetupReadbilityApiKey": {
-    "message" : "Configura la tua Readability Key in due semplici step",
-    "description": "Readability Help / first line : Setup your Readability API key in two easy steps"
+    "message" : "Configura la tua Mercury Key in due semplici step",
+    "description": "Mercury Help / first line : Setup your Mercury API key in two easy steps"
   },
   "optionsStepOne": {
-    "message" : "1. Crea un account gratuito per Readability",
-    "description": "Readability Help / first step / Title : 1. Create a free Readability account"
+    "message" : "1. Crea un account gratuito per Mercury",
+    "description": "Mercury Help / first step / Title : 1. Create a free Mercury account"
   },
   "optionsVisit": {
     "message" : "Visita il sito",
-    "description": "Readability Help / first step : Visit"
+    "description": "Mercury Help / first step : Visit"
   },
   "optionsCreateFreeAccount": {
     "message" : "e crea un account gratuito",
-    "description": "Readability Help / first step : and create your free account."
+    "description": "Mercury Help / first step : and create your free account."
   },
   "optionsLoginFacebook": {
     "message" : "E' anche possibile effettuare il login utilizzando Facebook",
-    "description": "Readability Help / first step / Facebook : You can also login using Facebook."
+    "description": "Mercury Help / first step / Facebook : You can also login using Facebook."
   },
   "optionsStepTwo": {
     "message" : "2. Recuperate la vostra API Key",
-    "description": "Readability Help / second step / Title : 2. Get your API key"
+    "description": "Mercury Help / second step / Title : 2. Get your API key"
   },
   "optionsYourApiKeyAvailableIn": {
     "message" : "La vostra key personale è disponibile nelle",
-    "description": "Readability Help / second step / Text : Your personal API key is available in your"
+    "description": "Mercury Help / second step / Text : Your personal API key is available in your"
   },
   "optionsAccountSettings": {
     "message" : "impostazioni account (Settings/Account)",
-    "description": "Readability Help / second step / Link : account settings."
+    "description": "Mercury Help / second step / Link : account settings."
   }
 }

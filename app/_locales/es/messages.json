@@ -4,7 +4,7 @@
     "description": "El nombre de la aplicación"
   },
   "appDescription": {
-    "message": "Integra Readability en Feedly y muestra el contenido completo de los artículos",
+    "message": "Integra Mercury en Feedly y muestra el contenido completo de los artículos",
     "description": "La descripción de la aplicación"
   },
   "articleNotLoaded": {

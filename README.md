@@ -8,9 +8,9 @@ With FullyFeedly you can load the full content of the articles inside Feedly, al
 
 ## Features
 
-* Seamless integration with Readability
+* Seamless integration with Mercury API
 * Super fast keyboard shortcut
-* Works perfectly with HTTPS connection
+* Works great with HTTPS connection
 
 ## Usage
 
@@ -38,4 +38,5 @@ Thanks a lot to the following developers for their help and contributions:
 The text of the article is extracted using the web API provided by:
 
 * [Boilerpipe](http://boilerpipe-web.appspot.com/): free to use, limited quota
-* [Readability](http://www.readability.com): free for non-commercial use, API key required
+* [Mercury](https://mercury.postlight.com/): free for non-commercial use, API key required
+* [Readability](http://www.readability.com): free for non-commercial use *(no longer supported)*

@@ -4,7 +4,7 @@
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "Add Readability to Feedly and show the full content of articles",
+    "message": "Add Mercury to Feedly and show the full content of articles",
     "description": "The description of the application"
   },
   "articleNotLoaded": {

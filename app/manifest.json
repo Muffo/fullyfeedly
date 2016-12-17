@@ -49,7 +49,6 @@
         "activeTab",
         "storage",
         "https://boilerpipe-web.appspot.com/*",
-        "https://www.readability.com/api/*",
         "https://mercury.postlight.com/*"
     ],
     "options_page": "options.html"
