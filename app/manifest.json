@@ -50,7 +50,7 @@
         "activeTab",
         "storage",
         "https://boilerpipe-web.appspot.com/*",
-        "https://mercury.postlight.com/*"
+        "https://mercury.postlight.com/*",
         "http://*/",
         "https://*/"
     ],
