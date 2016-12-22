@@ -23,7 +23,7 @@ You can also enable the keyboard shortcut from the options page and display the 
 
 Pull requests are very welcome!! :+1:
 
-If you want to help read the [contributors guidelines](https://github.com/Muffo/fullyfeedly/blob/master/CONTRIBUTING.md) of this repository.
+If you want to help read the [contributors guidelines](CONTRIBUTING.md) of this repository.
 
 
 Thanks a lot to the following developers for their help and contributions:
