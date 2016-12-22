@@ -16,6 +16,8 @@ With FullyFeedly you can load the full content of the articles inside Feedly, al
 
 When reading an incomplete post, simply press the icon of FullFeedly in the URL bar to download the full text.
 
+![Screenshot](resources/screenshots/showFullArticle.png)
+
 You can also enable the keyboard shortcut from the options page and display the full article with **f f**
 
 
