@@ -1,6 +1,6 @@
 {
     "name": "__MSG_appName__",
-    "version": "0.9.2",
+    "version": "0.10.0",
     "manifest_version": 2,
     "description": "__MSG_appDescription__",
     "icons": {
@@ -49,7 +49,6 @@
         "activeTab",
         "storage",
         "https://boilerpipe-web.appspot.com/*",
-        "https://www.readability.com/api/*",
         "https://mercury.postlight.com/*"
     ],
     "options_page": "options.html"

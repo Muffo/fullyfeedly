@@ -6,7 +6,6 @@
 /* ===================== Options ===================== */
 var options = {
     extractionAPI: 'Boilerpipe',
-    readabilityAPIKey: '',
     mercuryAPIKey: '',
     enableShortcut: false
 };
@@ -209,11 +208,11 @@ function boilerpipeRequest(xhr, overlay) {
     };
 }
 
-/* ===================== Readability/Mercury ===================== */
+/* ===================== Mercury ===================== */
 /**
  * Process the content of the article and add it to the page
  */
-function onMercuryReadabilityArticleExtracted(data, overlay) {
+function onMercuryArticleExtracted(data, overlay) {
 
     // Check if the API failed to extract the text
     if (data.content === null) {
@@ -243,21 +242,6 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     var articlePreviewHTML = contentElement.innerHTML;
     contentElement.innerHTML = articleContent;
 
-    // Add warning message if user is still using the Readability API
-    if (options.extractionAPI === 'Readability') {
-        var optionsUrl = chrome.extension.getURL("options.html");
-        var warningDiv = '<div class="migrationWarning"> \
-            <b>FullyFeedly: Readability API Migration</b><br/> \
-            The Readability API you are currently using will stop working on the 10th of December. See the \
-            <a href="https://medium.com/@readability/the-readability-bookmarking-service-will-shut-down-on-september-30-2016-1641cc18e02b#.e2aunrmow" \
-            target="_blank"> official announcement</a>.<br/> \
-            Please, go to the <a href="' + optionsUrl + '" target="_blank">options page of FullyFeedly</a> and select\
-            the new <a href="https://mercury.postlight.com/web-parser/" target="_blank">Mercury API</a>.<br/>\
-            Thanks a lot for using FullyFeedly :) \
-        </div>';
-        contentElement.innerHTML = warningDiv + contentElement.innerHTML;
-    }
-
     // Clear image styles to fix formatting of images with class/style/width information in article markup
     Array.prototype.slice.call(contentElement.querySelectorAll('img')).forEach(function(el) {
         el.removeAttribute('class');
@@ -276,31 +260,6 @@ function onMercuryReadabilityArticleExtracted(data, overlay) {
     addUndoButton(articlePreviewHTML);
 }
 
-/* ===================== Readability ===================== */
-function readabilityRequest(xhr, overlay) {
-    return function() {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // Operation succeded
-                var data = JSON.parse(xhr.responseText);
-                onMercuryReadabilityArticleExtracted(data, overlay);
-            } else if (xhr.status === 400) {
-                console.log('[FullyFeedly] Readability API Bad request: ' +
-                            'The server could not understand your request. ' +
-                            'Verify that request parameters (and content, if any) are valid.');
-                failOverlay('APIBadRequest', overlay);
-            } else if (xhr.status === 403) {
-                console.log('[FullyFeedly] Readability API Authorization Required: ' +
-                            'Authentication failed or was not provided.');
-                failOverlay('APIAuthorizationRequired', overlay);
-            } else {
-                console.log('[FullyFeedly] Readability API Unknown error');
-                failOverlay('APIUnknownError', overlay);
-            }
-        }
-    };
-}
-
 /* ===================== Mercury ===================== */
 function mercuryRequest(xhr, overlay) {
     return function() {
@@ -308,7 +267,7 @@ function mercuryRequest(xhr, overlay) {
             if (xhr.status === 200) {
                 // Operation succeded
                 var data = JSON.parse(xhr.responseText);
-                onMercuryReadabilityArticleExtracted(data, overlay);
+                onMercuryArticleExtracted(data, overlay);
             } else if (xhr.status === 400) {
                 console.log('[FullyFeedly] Mercury API Bad request: ' +
                             'The server could not understand your request. ' +
@@ -359,19 +318,6 @@ function fetchPageContent() {
 
         xhr.onreadystatechange = boilerpipeRequest(xhr, overlay);
     }
-    else if (options.extractionAPI === 'Readability') {
-        // Check if the key is set
-        if (options.readabilityAPIKey === '') {
-            failOverlay('APIMissingKey', overlay);
-            return;
-        }
-
-        // Prepare the request to Readability
-        url = 'https://www.readability.com/api/content/v1/parser?url=' +
-                encodedPageUrl + '&token=' + options.readabilityAPIKey;
-
-        xhr.onreadystatechange = readabilityRequest(xhr, overlay);
-    }
     else if (options.extractionAPI === 'Mercury') {
         if (options.mercuryAPIKey === '') {
             failOverlay('APIMissingKey', overlay);
@@ -387,7 +333,7 @@ function fetchPageContent() {
         return;
     }
     xhr.open('GET', url, true);
-    if (options.extractionAPI === 'Mercury' && options.mercuryAPIKey !== '') {
+    if (options.extractionAPI === 'Mercury') {
         xhr.setRequestHeader('x-api-key', options.mercuryAPIKey);
     }
     xhr.send();
