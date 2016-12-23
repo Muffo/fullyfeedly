@@ -6,13 +6,6 @@
 function updateForm() {
     var extractionAPI = $('#extractionAPI').val();
 
-    if (extractionAPI === 'Readability') {
-        $('#readabilityKeyForm').show();
-    }
-    else {
-        $('#readabilityKeyForm').hide();
-    }
-
     if (extractionAPI === 'Mercury') {
         $('#mercuryKeyForm').show();
     }
@@ -32,24 +25,11 @@ function onKeyboardShortcut() {
 // Saves options to chrome.storage
 function saveOptions() {
     var extractionAPI = $('#extractionAPI').val();
-    var readabilityAPIKey = $('#readabilityAPIKey').val();
     var mercuryAPIKey = $('#mercuryAPIKey').val();
     var enableShortcut = $('#enableShortcut').prop('checked');
     var status = $('#status');
 
     // Check optional paramenters
-    if (extractionAPI === 'Readability') {
-        if (readabilityAPIKey === '') {
-            // Show the error message
-            status.text('Missing Readability API key');
-            $('#readabilityKeyForm').addClass('has-error');
-            setTimeout(function() {
-                status.text('');
-                $('#readabilityKeyForm').removeClass('has-error');
-            }, 2000);
-            return;
-        }
-    }
     if (extractionAPI === 'Mercury') {
         if (mercuryAPIKey === '') {
             // Show the error message
@@ -65,7 +45,6 @@ function saveOptions() {
 
     chrome.storage.sync.set({
         extractionAPI: extractionAPI,
-        readabilityAPIKey: readabilityAPIKey,
         mercuryAPIKey: mercuryAPIKey,
         enableShortcut: enableShortcut
     }, function() {
@@ -79,15 +58,17 @@ function saveOptions() {
 
 // Restores the options using the preferences stored in chrome.storage.
 function restoreOptions() {
-    // Use default value extractionAPI = 'red' and readabilityAPIKey = ''
+    // Use default value extractionAPI = 'Boilerpipe' and mercuryAPIKey = ''
     chrome.storage.sync.get({
         extractionAPI: 'Boilerpipe',
-        readabilityAPIKey: '',
         mercuryAPIKey: '',
         enableShortcut: false
     }, function(items) {
+        // In case the user has not switched to Mercury yet...
+        if (items.extractionAPI === "Readability")
+            items.extractionAPI = "Boilerpipe";
+
         $('#extractionAPI').val(items.extractionAPI);
-        $('#readabilityAPIKey').val(items.readabilityAPIKey);
         $('#mercuryAPIKey').val(items.mercuryAPIKey);
         $('#enableShortcut').prop('checked', items.enableShortcut);
         updateForm();

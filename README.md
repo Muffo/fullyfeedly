@@ -8,13 +8,15 @@ With FullyFeedly you can load the full content of the articles inside Feedly, al
 
 ## Features
 
-* Seamless integration with Readability
+* Seamless integration with Mercury API
 * Super fast keyboard shortcut
-* Works perfectly with HTTPS connection
+* Works great with HTTPS connection
 
 ## Usage
 
 When reading an incomplete post, simply press the icon of FullFeedly in the URL bar to download the full text.
+
+![Screenshot](resources/screenshots/showFullArticle.png)
 
 You can also enable the keyboard shortcut from the options page and display the full article with **f f**
 
@@ -23,7 +25,7 @@ You can also enable the keyboard shortcut from the options page and display the 
 
 Pull requests are very welcome!! :+1:
 
-If you want to help read the [contributors guidelines](https://github.com/Muffo/fullyfeedly/blob/master/CONTRIBUTING.md) of this repository.
+If you want to help read the [contributors guidelines](CONTRIBUTING.md) of this repository.
 
 
 Thanks a lot to the following developers for their help and contributions:
@@ -37,5 +39,5 @@ Thanks a lot to the following developers for their help and contributions:
 
 The text of the article is extracted using the web API provided by:
 
+* [Mercury](https://mercury.postlight.com/): **recommended**, free for non-commercial use, API key required
 * [Boilerpipe](http://boilerpipe-web.appspot.com/): free to use, limited quota
-* [Readability](http://www.readability.com): free for non-commercial use, API key required
