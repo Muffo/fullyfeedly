@@ -1,0 +1,23 @@
+¡Lee tu feed RSS a la velocidad de la luz!
+FullyFeedly muestra los artículos completos en Feedly.com, el famoso lector RSS.
+
+Con FullyFeedly podrás leer los artículos completos en Feedly, incluso cuando el feed RSS solo contiene una vista previa.
+
+Funciones principales
+
+* Integración perfecta con el API de Mercury
+* Atajos de teclado superrápidos
+* Permite conexión HTTPS
+
+-----
+
+Novedades:
+
+Manténte informado de nuevas versiones en Github: https://github.com/Muffo/fullyfeedly/releases
+
+-----
+
+FullyFeedly necesita una cuenta gratuita de Mercury para funcionar.
+
+¿Te gusta la extensión? ¡¡Deja una opinión!!
+Espero vuestras comentarios :)

@@ -33,6 +33,7 @@ Thanks a lot to the following developers for their help and contributions:
 * [@patou](https://github.com/patou)
 * [@churchs19](https://github.com/churchs19)
 * [@pamarcos](https://github.com/pamarcos)
+* [@GuillermoEscobero](https://github.com/GuillermoEscobero)
 
 
 ### External API
