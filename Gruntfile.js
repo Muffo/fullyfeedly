@@ -240,7 +240,7 @@ module.exports = function (grunt) {
                         '{,*/}*.html',
                         'styles/{,*/}*.css',
                         'styles/fonts/{,*/}*.*',
-                        '_locales/{,*/}*.json',
+                        '_locales/{,*/}*.json'
                     ]
                 }]
             }

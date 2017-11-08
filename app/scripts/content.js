@@ -10,9 +10,9 @@ var options = {
     enableShortcut: false
 };
 
-// Restores the options using the preferences stored in chrome.storage.
+// Restores the options using the preferences stored in browser.storage.
 (function restoreOptions() {
-    chrome.storage.sync.get(
+    browser.storage.sync.get(
         options,
         function(items) {
             options = items;
@@ -49,7 +49,7 @@ function loadingOverlay() {
 	document.body.appendChild(target);
 	var spinner = new Spinner(spinOpts).spin(target);
     var overlay = iosOverlay({
-        text: chrome.i18n.getMessage('loading'),
+        text: browser.i18n.getMessage('loading'),
         spinner: spinner
     });
 
@@ -75,14 +75,14 @@ function genericOverlay(message, icon, duration, overlay) {
 }
 
 function successOverlay(message, overlay) {
-    genericOverlay(chrome.i18n.getMessage(message),
-                    chrome.extension.getURL('images/check.png'),
+    genericOverlay(browser.i18n.getMessage(message),
+                    browser.extension.getURL('images/check.png'),
                     1e3, overlay);
 }
 
 function failOverlay(message, overlay) {
-    genericOverlay(chrome.i18n.getMessage(message),
-                    chrome.extension.getURL('images/cross.png'),
+    genericOverlay(browser.i18n.getMessage(message),
+                    browser.extension.getURL('images/cross.png'),
                     2e3, overlay);
 }
 
@@ -122,7 +122,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 }
 
 function addShowFullArticleBtn() {
-    addButton(chrome.i18n.getMessage('showFullArticle'), 'showFullArticleBtn fx-button secondary full-width',
+    addButton(browser.i18n.getMessage('showFullArticle'), 'showFullArticleBtn fx-button secondary full-width',
                 fetchPageContent, 'showArticlePreviewBtn');
 
     // Add keyboard shortcut
@@ -132,7 +132,7 @@ function addShowFullArticleBtn() {
 }
 
 function addShowArticlePreviewBtn(showPreviewFunction) {
-    addButton(chrome.i18n.getMessage('showArticlePreview'), 'showArticlePreviewBtn fx-button secondary full-width',
+    addButton(browser.i18n.getMessage('showArticlePreview'), 'showArticlePreviewBtn fx-button secondary full-width',
                 showPreviewFunction, 'showFullArticleBtn');
 
     // Add keyboard shortcut
@@ -153,7 +153,7 @@ function onBoilerpipeArticleExtracted(data, overlay) {
     // Check if the API failed to extract the text
     if (data.status === null || data.status !== 'success') {
         console.log('[FullyFeedly] API failed to extract the content');
-        failOverlay(chrome.i18n.getMessage('articleNotLoaded'), overlay);
+        failOverlay(browser.i18n.getMessage('articleNotLoaded'), overlay);
         return;
     }
 
@@ -202,7 +202,7 @@ function boilerpipeRequest(xhr, overlay) {
                 failOverlay('APIOverQuota', overlay);
             } else {
                 console.log('[FullyFeedly] Failed to load the content of the page');
-                failOverlay(chrome.i18n.getMessage('articleNotFound'), overlay);
+                failOverlay(browser.i18n.getMessage('articleNotFound'), overlay);
             }
         }
     };
@@ -393,9 +393,9 @@ observeDOM(document.getElementById('box'), function() {
 });
 
 // Listen for requests coming from clicks on the page action button
-chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+browser.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     // Process the requests according to the action specified
-    if (msg.text && (msg.text === 'extract_article')) {
+    if (msg.text && msg.text === 'extract_article') {
         // Check if the operation is allowed
         if (document.querySelector('.showFullArticleBtn') !== null )
         {

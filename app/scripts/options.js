@@ -22,7 +22,7 @@ function onKeyboardShortcut() {
     }, 500);
 }
 
-// Saves options to chrome.storage
+// Saves options to browser.storage
 function saveOptions() {
     var extractionAPI = $('#extractionAPI').val();
     var mercuryAPIKey = $('#mercuryAPIKey').val();
@@ -43,7 +43,7 @@ function saveOptions() {
         }
     }
 
-    chrome.storage.sync.set({
+    browser.storage.sync.set({
         extractionAPI: extractionAPI,
         mercuryAPIKey: mercuryAPIKey,
         enableShortcut: enableShortcut
@@ -56,10 +56,10 @@ function saveOptions() {
     });
 }
 
-// Restores the options using the preferences stored in chrome.storage.
+// Restores the options using the preferences stored in browser.storage.
 function restoreOptions() {
     // Use default value extractionAPI = 'Boilerpipe' and mercuryAPIKey = ''
-    chrome.storage.sync.get({
+    browser.storage.sync.get({
         extractionAPI: 'Boilerpipe',
         mercuryAPIKey: '',
         enableShortcut: false
@@ -79,9 +79,9 @@ function translateOptions() {
   var objects = document.getElementsByTagName('*'), i;
   for(i = 0; i < objects.length; i++) {
     if (objects[i].dataset && objects[i].dataset.message) {
-      var html = chrome.i18n.getMessage(objects[i].dataset.message);
+      var html = browser.i18n.getMessage(objects[i].dataset.message);
       if (html) {
-          objects[i].innerHTML = chrome.i18n.getMessage(objects[i].dataset.message);
+          objects[i].innerHTML = browser.i18n.getMessage(objects[i].dataset.message);
       }
     }
   }

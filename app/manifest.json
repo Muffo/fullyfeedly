@@ -12,15 +12,15 @@
         "scripts": [
             "scripts/chromereload.js",
             "scripts/background.js"
-        ],
-        "persistent": false
+        ]
     },
     "page_action": {
+        "browser_style": true,
         "default_icon": {
             "19": "images/icon-19.png",
             "38": "images/icon-38.png"
         },
-        "default_title": "fullyfeedly"
+        "default_title": "Fully Feedly"
     },
     "content_scripts": [
         {
@@ -45,11 +45,12 @@
         "options.html"
     ],
     "permissions": [
-        "declarativeContent",
         "activeTab",
         "storage",
         "https://boilerpipe-web.appspot.com/*",
         "https://mercury.postlight.com/*"
     ],
-    "options_page": "options.html"
+    "options_ui": {
+        "page": "options.html"
+    }
 }
