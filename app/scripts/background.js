@@ -15,8 +15,11 @@ function printResponse(response) {
    It matches URLs like: http[s]://[...]feedly.com[...] */
 var urlRegex = /^https?:\/\/(?:[^.]+\.)?feedly\.com/;
 
-browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if(changeInfo.url && urlRegex.test(changeInfo.url)) {
+browser.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+    if (!changeInfo.url) {
+        return;
+    }
+    if (urlRegex.test(changeInfo.url)) {
         browser.pageAction.show(tabId);
     } else {
         browser.pageAction.hide(tabId);
@@ -33,6 +36,29 @@ browser.pageAction.onClicked.addListener(function(tab) {
             { text: 'extract_article' },
             printResponse
         );
+    }
+});
+
+browser.runtime.onMessage.addListener(function(message) {
+    if (message.hasOwnProperty('optionsUpdated')) {
+        browser.tabs
+            .query({
+                url: '*://*.feedly.com/*'
+            })
+            .then(function(tabs) {
+                for (var i = 0; i < tabs.length; i++) {
+                    var tab = tabs[i];
+                    browser.tabs.sendMessage(tab.id, {
+                        reloadOptions: true
+                    });
+                }
+            })
+            .catch(function(error) {
+                console.log(
+                    '[FullyFeedly] Error reloading options on tabs: ',
+                    error
+                );
+            });
     }
 });
 

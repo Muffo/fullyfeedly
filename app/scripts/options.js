@@ -8,8 +8,7 @@ function updateForm() {
 
     if (extractionAPI === 'Mercury') {
         $('#mercuryKeyForm').show();
-    }
-    else {
+    } else {
         $('#mercuryKeyForm').hide();
     }
 }
@@ -43,48 +42,61 @@ function saveOptions() {
         }
     }
 
-    browser.storage.sync.set({
-        extractionAPI: extractionAPI,
-        mercuryAPIKey: mercuryAPIKey,
-        enableShortcut: enableShortcut
-    }, function() {
-        // Update status to let user know options were saved.
-        status.text('Options saved');
-        setTimeout(function() {
-            status.text('');
-        }, 2000);
-    });
+    browser.storage.sync.set(
+        {
+            extractionAPI: extractionAPI,
+            mercuryAPIKey: mercuryAPIKey,
+            enableShortcut: enableShortcut
+        },
+        function() {
+            // Update status to let user know options were saved.
+            status.text('Options saved');
+            browser.runtime.sendMessage({
+                optionsUpdated: true
+            });
+            setTimeout(function() {
+                status.text('');
+            }, 2000);
+        }
+    );
 }
 
 // Restores the options using the preferences stored in browser.storage.
 function restoreOptions() {
     // Use default value extractionAPI = 'Boilerpipe' and mercuryAPIKey = ''
-    browser.storage.sync.get({
-        extractionAPI: 'Boilerpipe',
-        mercuryAPIKey: '',
-        enableShortcut: false
-    }, function(items) {
-        // In case the user has not switched to Mercury yet...
-        if (items.extractionAPI === "Readability")
-            items.extractionAPI = "Boilerpipe";
+    browser.storage.sync.get(
+        {
+            extractionAPI: 'Boilerpipe',
+            mercuryAPIKey: '',
+            enableShortcut: false
+        },
+        function(items) {
+            // In case the user has not switched to Mercury yet...
+            if (items.extractionAPI === 'Readability') {
+                items.extractionAPI = 'Boilerpipe';
+            }
 
-        $('#extractionAPI').val(items.extractionAPI);
-        $('#mercuryAPIKey').val(items.mercuryAPIKey);
-        $('#enableShortcut').prop('checked', items.enableShortcut);
-        updateForm();
-    });
+            $('#extractionAPI').val(items.extractionAPI);
+            $('#mercuryAPIKey').val(items.mercuryAPIKey);
+            $('#enableShortcut').prop('checked', items.enableShortcut);
+            updateForm();
+        }
+    );
 }
 
 function translateOptions() {
-  var objects = document.getElementsByTagName('*'), i;
-  for(i = 0; i < objects.length; i++) {
-    if (objects[i].dataset && objects[i].dataset.message) {
-      var html = browser.i18n.getMessage(objects[i].dataset.message);
-      if (html) {
-          objects[i].innerHTML = browser.i18n.getMessage(objects[i].dataset.message);
-      }
+    var objects = document.getElementsByTagName('*'),
+        i;
+    for (i = 0; i < objects.length; i++) {
+        if (objects[i].dataset && objects[i].dataset.message) {
+            var html = browser.i18n.getMessage(objects[i].dataset.message);
+            if (html) {
+                objects[i].innerHTML = browser.i18n.getMessage(
+                    objects[i].dataset.message
+                );
+            }
+        }
     }
-  }
 }
 document.addEventListener('DOMContentLoaded', restoreOptions);
 document.addEventListener('DOMContentLoaded', translateOptions);
