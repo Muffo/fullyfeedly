@@ -42,35 +42,37 @@ function saveOptions() {
         }
     }
 
-    browser.storage.sync.set(
-        {
+    browser.storage.sync
+        .set({
             extractionAPI: extractionAPI,
             mercuryAPIKey: mercuryAPIKey,
             enableShortcut: enableShortcut
-        },
-        function() {
+        })
+        .then(function() {
             // Update status to let user know options were saved.
             status.text('Options saved');
-            browser.runtime.sendMessage({
-                optionsUpdated: true
-            });
-            setTimeout(function() {
-                status.text('');
-            }, 2000);
-        }
-    );
+            browser.runtime
+                .sendMessage({
+                    optionsUpdated: true
+                })
+                .then(function() {
+                    setTimeout(function() {
+                        status.text('');
+                    }, 2000);
+                });
+        });
 }
 
 // Restores the options using the preferences stored in browser.storage.
 function restoreOptions() {
     // Use default value extractionAPI = 'Boilerpipe' and mercuryAPIKey = ''
-    browser.storage.sync.get(
-        {
+    browser.storage.sync
+        .get({
             extractionAPI: 'Boilerpipe',
             mercuryAPIKey: '',
             enableShortcut: false
-        },
-        function(items) {
+        })
+        .then(function(items) {
             // In case the user has not switched to Mercury yet...
             if (items.extractionAPI === 'Readability') {
                 items.extractionAPI = 'Boilerpipe';
@@ -80,8 +82,7 @@ function restoreOptions() {
             $('#mercuryAPIKey').val(items.mercuryAPIKey);
             $('#enableShortcut').prop('checked', items.enableShortcut);
             updateForm();
-        }
-    );
+        });
 }
 
 function translateOptions() {

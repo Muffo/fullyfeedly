@@ -1,6 +1,6 @@
 {
   "name": "fullyfeedly",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~1.0.1",
@@ -16,10 +16,10 @@
     "grunt-contrib-htmlmin": "~2.4.0",
     "grunt-contrib-imagemin": "~2.0.1",
     "grunt-contrib-jshint": "~1.1.0",
-    "grunt-contrib-uglify": "~3.1.0",
+    "grunt-contrib-uglify": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-mocha": "~1.0.2",
-    "grunt-svgmin": "~4.0.0",
+    "grunt-svgmin": "~5.0.0",
     "grunt-usemin": "~3.1.1",
     "jshint-stylish": "~2.2.1",
     "load-grunt-tasks": "~3.5.2",

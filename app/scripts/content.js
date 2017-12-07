@@ -25,10 +25,13 @@ function restoreOptions() {
 }
 
 (function() {
-    browser.runtime.onMessage.addListener(function(message) {
-        if (message.hasOwnProperty('reloadOptions')) {
-            restoreOptions();
-        }
+    browser.runtime.onMessage.addListener(function(message, sender) {
+        return new Promise(function(resolve, reject) {
+            if (message.hasOwnProperty('reloadOptions')) {
+                restoreOptions();
+            }
+            resolve('done');
+        });
     });
     restoreOptions();
 })();
@@ -426,13 +429,15 @@ observeDOM(document.getElementById('box'), function() {
 });
 
 // Listen for requests coming from clicks on the page action button
-browser.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-    // Process the requests according to the action specified
-    if (msg.text && msg.text === 'extract_article') {
-        // Check if the operation is allowed
-        if (document.querySelector('.showFullArticleBtn') !== null) {
-            fetchPageContent();
+browser.runtime.onMessage.addListener(function(msg, sender) {
+    return new Promise(function(resolve, reject) {
+        // Process the requests according to the action specified
+        if (msg.text && msg.text === 'extract_article') {
+            // Check if the operation is allowed
+            if (document.querySelector('.showFullArticleBtn') !== null) {
+                fetchPageContent();
+            }
         }
-        sendResponse('done');
-    }
+        resolve('done');
+    });
 });
