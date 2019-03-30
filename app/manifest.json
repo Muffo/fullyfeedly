@@ -49,7 +49,7 @@
         "activeTab",
         "storage",
         "https://boilerpipe-web.appspot.com/*",
-        "https://mercury.postlight.com/*"
+        "https://tspqn0587i.execute-api.us-east-1.amazonaws.com/*"
     ],
     "options_page": "options.html"
 }
