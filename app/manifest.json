@@ -1,36 +1,37 @@
 {
     "name": "__MSG_appName__",
-    "version": "0.10.0",
+    "version": "1.1.0",
     "manifest_version": 2,
     "description": "__MSG_appDescription__",
     "icons": {
         "16": "images/icon-16.png",
         "128": "images/icon-128.png"
     },
+    "applications": {
+        "gecko": {
+            "id": "addon@fullyfeedly"
+        }
+    },
     "default_locale": "en",
     "background": {
-        "scripts": [
-            "scripts/chromereload.js",
-            "scripts/background.js"
-        ],
-        "persistent": false
+        "scripts": ["scripts/chromereload.js", "scripts/browser-polyfill.js", "scripts/background.js"]
     },
     "page_action": {
+        "browser_style": true,
         "default_icon": {
             "19": "images/icon-19.png",
             "38": "images/icon-38.png"
         },
-        "default_title": "fullyfeedly"
+        "default_title": "Fully Feedly"
     },
     "content_scripts": [
         {
-            "matches": [
-                "*://*.feedly.com/*"
-            ],
+            "matches": ["*://*.feedly.com/*"],
             "js": [
                 "bower_components/spin.js/spin.js",
                 "bower_components/iosoverlay/js/iosOverlay.js",
                 "bower_components/mousetrap/mousetrap.js",
+                "scripts/browser-polyfill.js",
                 "scripts/content.js"
             ],
             "css": [
@@ -45,11 +46,13 @@
         "options.html"
     ],
     "permissions": [
-        "declarativeContent",
-        "activeTab",
+        "tabs",
         "storage",
+        "*://*.feedly.com/*",
         "https://boilerpipe-web.appspot.com/*",
-        "https://mercury.postlight.com/*"
+        "https://tspqn0587i.execute-api.us-east-1.amazonaws.com/*"
     ],
-    "options_page": "options.html"
+    "options_ui": {
+        "page": "options.html"
+    }
 }

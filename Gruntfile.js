@@ -143,7 +143,6 @@ module.exports = function (grunt) {
                 dest: '<%= config.dist %>'
             },
             html: [
-                '<%= config.app %>/popup.html',
                 '<%= config.app %>/options.html'
             ]
         },
@@ -240,7 +239,7 @@ module.exports = function (grunt) {
                         '{,*/}*.html',
                         'styles/{,*/}*.css',
                         'styles/fonts/{,*/}*.*',
-                        '_locales/{,*/}*.json',
+                        '_locales/{,*/}*.json'
                     ]
                 }]
             }
