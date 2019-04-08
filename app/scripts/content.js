@@ -5,8 +5,7 @@
 
 /* ===================== Options ===================== */
 var options = {
-    extractionAPI: 'Boilerpipe',
-    mercuryAPIKey: '',
+    extractionAPI: 'Mercury',
     enableShortcut: false
 };
 
@@ -240,7 +239,7 @@ function boilerpipeRequest(xhr, overlay) {
 function onMercuryArticleExtracted(data, overlay) {
     // Check if the API failed to extract the text
     if (data.content === null) {
-        console.log('[FullyFeedly] API failed to extract the content');
+        console.log('[FullyFeedly] Mercury API failed to extract the content');
         failOverlay('articleNotFound', overlay);
         return;
     }
@@ -350,12 +349,7 @@ function fetchPageContent() {
 
         xhr.onreadystatechange = boilerpipeRequest(xhr, overlay);
     } else if (options.extractionAPI === 'Mercury') {
-        if (options.mercuryAPIKey === '') {
-            failOverlay('APIMissingKey', overlay);
-            return;
-        }
-
-        url = 'https://mercury.postlight.com/parser?url=' + encodedPageUrl;
+        url = 'https://tspqn0587i.execute-api.us-east-1.amazonaws.com/prod/parser?url=' + encodedPageUrl;
 
         xhr.onreadystatechange = mercuryRequest(xhr, overlay);
     } else {
@@ -363,9 +357,6 @@ function fetchPageContent() {
         return;
     }
     xhr.open('GET', url, true);
-    if (options.extractionAPI === 'Mercury') {
-        xhr.setRequestHeader('x-api-key', options.mercuryAPIKey);
-    }
     xhr.send();
 }
 
