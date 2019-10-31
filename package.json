@@ -1,31 +1,31 @@
 {
-  "name": "fullyfeedly",
-  "version": "1.0.2",
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~1.0.1",
-    "grunt-bower-install": "~1.6.0",
-    "grunt-chrome-manifest": "~0.3.0",
-    "grunt-concurrent": "~2.3.1",
-    "grunt-contrib-clean": "~1.1.0",
-    "grunt-contrib-compress": "~1.4.3",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "~1.0.2",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "~2.2.1",
-    "grunt-contrib-htmlmin": "~2.4.0",
-    "grunt-contrib-imagemin": "~2.0.1",
-    "grunt-contrib-jshint": "~1.1.0",
-    "grunt-contrib-uglify": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
-    "grunt-contrib-watch": "~1.0.0",
-    "grunt-mocha": "~1.0.2",
-    "grunt-svgmin": "~5.0.0",
-    "grunt-usemin": "~3.1.1",
-    "jshint-stylish": "~2.2.1",
-    "load-grunt-tasks": "~3.5.2",
-    "time-grunt": "~1.4.0"
-  },
-  "engines": {
-    "node": ">=0.8.0"
-  }
+    "name": "fullyfeedly",
+    "version": "1.1.2",
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": "^1.0.4",
+        "grunt-bower-install": "~1.6.0",
+        "grunt-chrome-manifest": "~0.3.0",
+        "grunt-concurrent": "~2.3.1",
+        "grunt-contrib-clean": "~1.1.0",
+        "grunt-contrib-compress": "~1.4.3",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-connect": "~1.0.2",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-cssmin": "~2.2.1",
+        "grunt-contrib-htmlmin": "~2.4.0",
+        "grunt-contrib-imagemin": "~2.0.1",
+        "grunt-contrib-jshint": "~1.1.0",
+        "grunt-contrib-uglify": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
+        "grunt-contrib-watch": "^1.1.0",
+        "grunt-mocha": "^1.2.0",
+        "grunt-svgmin": "~5.0.0",
+        "grunt-usemin": "~3.1.1",
+        "jshint-stylish": "~2.2.1",
+        "load-grunt-tasks": "~3.5.2",
+        "time-grunt": "~1.4.0"
+    },
+    "engines": {
+        "node": ">=0.8.0"
+    }
 }
