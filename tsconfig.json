@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "target": "ES5",
+        "module": "ES2015",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "strictNullChecks": false,
+        "outDir": "tmp",
+        "lib": ["es2017", "dom", "esnext.asynciterable"]
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules", "./src/**/*.js", "./src/**/*.jsx"]
+}

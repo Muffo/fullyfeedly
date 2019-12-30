@@ -1,0 +1,53 @@
+{
+    "name": "Fully Feedly",
+    "version": "2.0.0",
+    "manifest_version": 2,
+    "description": "Fully Feedly",
+    "icons": {
+        "16": "img/icon-16.png",
+        "128": "img/icon-128.png"
+    },
+    "applications": {
+        "gecko": {
+            "id": "addon@fullyfeedly"
+        }
+    },
+    "default_locale": "en",
+    "background": {
+        "scripts": ["lib/browser-polyfill.js", "/background.js"]
+    },
+    "page_action": {
+        "browser_style": true,
+        "default_icon": {
+            "19": "img/icon-19.png",
+            "38": "img/icon-38.png"
+        },
+        "default_title": "Fully Feedly"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.feedly.com/*"],
+            "js": [
+                "lib/browser-polyfill.js",
+                "lib/iosOverlay.js",
+                "/content_script.js"
+            ],
+            "css": ["styles/content.css"]
+        }
+    ],
+    "web_accessible_resources": [
+        "img/cross.png",
+        "img/check.png",
+        "options.html"
+    ],
+    "permissions": [
+        "tabs",
+        "storage",
+        "*://*.feedly.com/*",
+        "https://boilerpipe-web.appspot.com/*",
+        "https://tspqn0587i.execute-api.us-east-1.amazonaws.com/*"
+    ],
+    "options_ui": {
+        "page": "options.html"
+    }
+}
