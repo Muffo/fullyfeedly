@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <link rel="stylesheet" href="lib/bootstrap.min.css" />
+        <link href="styles/main.css" rel="stylesheet" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="jumbotron">
+                        <img
+                            src="img/icon-128.png"
+                            class="pull-right"
+                            id="icon128"
+                        />
+                        <h1 data-message="appName">FullyFeedly</h1>
+                        <p data-message="appDescription">
+                            Show the full content of the articles in Feedly.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <label
+                            for="extractionAPI"
+                            data-message="optionsArticleExtractionAPI"
+                            >Article extraction API</label
+                        >
+                        <select
+                            class="form-control input-lg"
+                            id="extractionAPI"
+                        >
+                            <option>Boilerpipe</option>
+                            <option>Mercury</option>
+                        </select>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="enableShortcut" />
+                            <span data-message="optionsEnableKeyboardShortcut"
+                                >Enable keyboard shortcut</span
+                            >
+                            <code>f f</code>
+                        </label>
+                        <span
+                            class="pull-right"
+                            id="tryShortcut"
+                            data-message="optionsTryMe"
+                        >
+                            Try me
+                        </span>
+                    </div>
+                    <button
+                        class="btn btn-success"
+                        id="save"
+                        data-message="optionsSave"
+                    >
+                        Save
+                    </button>
+                    <span id="status"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <hr />
+                    <p style="text-align: right">
+                        <span data-message="optionsDevelopedBy"
+                            >Originally developed by</span
+                        >
+                        <a href="http://linkedin.com/in/andreagrandi87">
+                            <img src="img/linkedin_btn_20x15.png" />Andrea
+                            Grandi
+                        </a>
+                    </p>
+                    <p style="text-align: right">
+                        <span data-message="optionsDevelopedBy"
+                            >Ported to Web Extensions API by</span
+                        >
+                        <a href="http://linkedin.com/in/shanechurch">
+                            <img src="img/linkedin_btn_20x15.png" />Shane Church
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Github ribbon -->
+        <a href="https://github.com/muffo/fullyfeedly" target="_blank">
+            <img
+                style="position: absolute; top: 0; right: 0; border: 0;"
+                src="img/forkmeongithub.png"
+                alt="Fork me on GitHub"
+            />
+        </a>
+
+        <script src="/lib/jquery.min.js"></script>
+        <script src="/lib/bootstrap.min.js"></script>
+        <script src="/lib/browser-polyfill.js"></script>
+    </body>
+</html>
