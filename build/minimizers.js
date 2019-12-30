@@ -1,12 +1,11 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const CssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = () => [
-    new UglifyJsPlugin({
-        cache: true,
-        sourceMap: true,
-        uglifyOptions: {
-            output: { ascii_only: true }
+    new TerserPlugin({
+        parallel: true,
+        terserOptions: {
+            ecma: 6
         }
     }),
     new CssAssetsPlugin({

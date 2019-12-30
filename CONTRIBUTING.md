@@ -6,18 +6,34 @@ Follow [this guide](http://minimul.com/developing-a-chrome-extension-with-yeoman
 
 Clone the repository:
 
-    git clone https://github.com/Muffo/fullyfeedly.git
+    git clone https://github.com/churchs19/fullyfeedly.git
 
-Install the dependencies:
+Development:
 
-    npm install
-    npx bower install
+```bash
+# Install the dependencies
+npm install
 
-Build the extension:
+# Watch and build source code to 'extension/'
+npm run watch
 
-    npx grunt build
+# Watch and build source code to 'extension/' with system build notifications
+npm run watch:notif
 
-You can now [load the unpacked extension in Chrome](https://developer.chrome.com/extensions/getstarted#unpacked)  from the local folder.
+# Build source code for production
+npm run build:prod
+
+# Build source code for production + package source and build for store submissions
+npm run build:package
+
+# Run all linting checks
+npm run lint
+
+# Clean webpack build cache (run if running into problems between builds)
+npm run cache:clean
+```
+
+You can now [load the unpacked extension in Chrome](https://developer.chrome.com/extensions/getstarted#unpacked) from the local folder.
 
 ## Branching strategy
 
@@ -36,6 +52,6 @@ Please, do not increase the version numbers in your pull requests.
 
 When you open an issue, please include the following information:
 
-* Operating System
-* Whether you are using Feedly Premium or the beta version
-* A few screenshots of the issue
+-   Operating System
+-   Whether you are using Feedly Premium or the beta version
+-   A few screenshots of the issue
