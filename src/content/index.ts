@@ -1,5 +1,6 @@
 import * as Mousetrap from 'mousetrap';
 import { browser } from 'webextension-polyfill-ts';
+import * as DOMPurify from 'dompurify';
 
 import { FullyFeedlyOptions } from '../fully-feedly-options';
 import { FailOverlay, LoadingOverlay, SuccessOverlay } from './overlay';
@@ -170,6 +171,7 @@ class ContentScript {
 
         try {
             const articleContent = await parser.fetchArticleText();
+            const cleanArticleContent = DOMPurify.sanitize(articleContent);
 
             // Search the element of the page that will containt the text
             const contentElement = document.querySelector(
@@ -193,7 +195,7 @@ class ContentScript {
 
             // Replace the preview of the article with the full text
             const articlePreviewHTML = contentElement.innerHTML;
-            contentElement.innerHTML = articleContent;
+            contentElement.innerHTML = cleanArticleContent;
 
             // Clear image styles to fix formatting of images with class/style/width information in article markup
             Array.prototype.slice

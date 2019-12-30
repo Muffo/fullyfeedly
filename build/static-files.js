@@ -7,7 +7,8 @@ exports.htmlAssets = [
     'lib/jquery.min.js',
     'lib/bootstrap.min.js',
     'lib/mousetrap.min.js',
-    'lib/iosOverlay.js'
+    'lib/iosOverlay.js',
+    'lib/purify.min.js'
 ];
 
 /**
@@ -52,6 +53,10 @@ exports.copyPatterns = [
     },
     {
         from: 'node_modules/ios-notification-overlay/js/iosOverlay.js',
+        to: 'lib/'
+    },
+    {
+        from: 'node_modules/dompurify/dist/purify.min.js',
         to: 'lib/'
     },
     {
