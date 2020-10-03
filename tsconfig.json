@@ -1,5 +1,8 @@
 {
     "compilerOptions": {
+        "forceConsistentCasingInFileNames": true,
+        "importHelpers": true,
+        "removeComments": true,
         "allowJs": true,
         "target": "ES5",
         "module": "ES2015",
