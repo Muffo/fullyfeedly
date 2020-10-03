@@ -21,8 +21,8 @@ export class LoadingOverlay implements Overlay {
         hwaccel: false, // Whether to use hardware acceleration
         className: 'spinner', // The CSS class to assign to the spinner
         zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: 'auto', // Top position relative to parent in px
-        left: 'auto' // Left position relative to parent in px
+        top: '50vh', // Top position relative to parent in px
+        left: '50vw' // Left position relative to parent in px
     };
 
     public showOverlay() {

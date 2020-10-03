@@ -1,0 +1,5 @@
+{
+    "hints": {
+        "typescript-config/strict": "off"
+    }
+}
