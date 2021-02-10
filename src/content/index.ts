@@ -49,7 +49,7 @@ class ContentScript {
     setupMutationObserver() {
         // This is used to add the button to the article when its
         // preview is opened in Feedly
-        const observer = new MutationObserver(mutations => {
+        const observer = new MutationObserver((mutations) => {
             if (
                 mutations[0].addedNodes.length > 0 ||
                 mutations[0].removedNodes.length > 0
@@ -74,12 +74,9 @@ class ContentScript {
     /* ===================== Buttons management  ===================== */
     public addButton(btnText, btnClass, btnAction, deleteBtnClass) {
         // Search the button to open the website and the container element
-        const openWebsiteBtn = document.querySelector(
-            '.u100Entry .fx-button.secondary.full-width'
-        );
-        const entryElement = document.querySelector('.u100Entry');
+        const openWebsiteBtn = document.querySelector('.visitWebsiteButton');
 
-        if (openWebsiteBtn === null || entryElement === null) {
+        if (openWebsiteBtn === null) {
             return;
         }
 
@@ -99,7 +96,7 @@ class ContentScript {
         };
 
         // Add the new button to the page
-        entryElement.insertBefore(newButton, openWebsiteBtn);
+        openWebsiteBtn.parentElement.insertBefore(newButton, openWebsiteBtn);
 
         // Remove the old button
         const oldButton = document.querySelector('.' + deleteBtnClass);
@@ -111,7 +108,7 @@ class ContentScript {
     public addShowFullArticleBtn() {
         this.addButton(
             browser.i18n.getMessage('showFullArticle'),
-            'showFullArticleBtn fx-button secondary full-width',
+            'button secondary full-width showFullArticleBtn',
             () => {
                 this.fetchPageContent();
             },
@@ -129,7 +126,7 @@ class ContentScript {
     public addShowArticlePreviewBtn(showPreviewFunction: () => void) {
         this.addButton(
             browser.i18n.getMessage('showArticlePreview'),
-            'showArticlePreviewBtn fx-button secondary full-width',
+            'button secondary full-width showArticlePreviewBtn',
             showPreviewFunction,
             'showFullArticleBtn'
         );
@@ -200,7 +197,7 @@ class ContentScript {
             // Clear image styles to fix formatting of images with class/style/width information in article markup
             Array.prototype.slice
                 .call(contentElement.querySelectorAll('img'))
-                .forEach(el => {
+                .forEach((el) => {
                     el.removeAttribute('class');
                     el.removeAttribute('width');
                     el.setAttribute('style', 'max-width:100%;');

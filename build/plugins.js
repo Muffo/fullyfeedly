@@ -20,14 +20,14 @@ const { output } = require('./config');
 /**
  * @param {boolean} tslint Denotes whether or not to enable linting on this thread as well as type checking.
  */
-const initTsPlugin = tslint =>
+const initTsPlugin = (tslint) =>
     new ForkTsPlugin({
         checkSyntacticErrors: true,
         async: false,
         tslint
     });
 
-module.exports = function({
+module.exports = function ({
     webExtReloadPort = 9090,
     mode = 'development',
     template,
