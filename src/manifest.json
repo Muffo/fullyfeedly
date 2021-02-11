@@ -1,6 +1,6 @@
 {
     "name": "Fully Feedly",
-    "version": "2.0.1",
+    "version": "2.0.5",
     "manifest_version": 2,
     "description": "Fully Feedly",
     "icons": {
@@ -26,7 +26,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["*://*.feedly.com/*", "*://feedly.com/*"],
+            "matches": ["*://*.feedly.com/*"],
             "js": [
                 "lib/browser-polyfill.js",
                 "lib/iosOverlay.js",
@@ -44,7 +44,6 @@
         "tabs",
         "storage",
         "*://*.feedly.com/*",
-        "*://feedly.com/*",
         "https://boilerpipe-web.appspot.com/*",
         "https://tspqn0587i.execute-api.us-east-1.amazonaws.com/*"
     ],
