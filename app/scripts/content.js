@@ -89,19 +89,19 @@ function failOverlay(message, overlay) {
 function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 
     // Search the button to open the website and the container element
-    var openWebsiteBtn = document.querySelector('.u100Entry .fx-button.secondary.full-width');
-    var entryElement = document.querySelector('.u100Entry');
+    var visitWebsiteBtn = document.querySelector('.visitWebsiteButton');
 
-    if (openWebsiteBtn === null || entryElement === null) {
+    if (visitWebsiteBtn === null) {
+        // console.log('[FullyFeedly] Did not find expected DOM elements in Feedly');
         return;
     }
 
-    if(openWebsiteBtn.className.indexOf('websiteCallForAction') === -1) {
-        openWebsiteBtn.className += ' websiteCallForAction';
+    if(visitWebsiteBtn.className.indexOf('websiteCallForAction') === -1) {
+        visitWebsiteBtn.className += ' websiteCallForAction';
     }
 
     // Create a new button used to load the article
-    var newButton = openWebsiteBtn.cloneNode();
+    var newButton = visitWebsiteBtn.cloneNode();
     newButton.className = btnClass;
     newButton.innerText = btnText;
 
@@ -110,7 +110,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
     newButton.onclick = btnAction;
 
     // Add the new button to the page
-    entryElement.insertBefore(newButton, openWebsiteBtn);
+    visitWebsiteBtn.parentNode.insertBefore(newButton, visitWebsiteBtn);
 
     // Remove the old button
     var oldButton = document.querySelector('.' + deleteBtnClass);
@@ -121,7 +121,7 @@ function addButton(btnText, btnClass, btnAction, deleteBtnClass) {
 }
 
 function addShowFullArticleBtn() {
-    addButton(chrome.i18n.getMessage('showFullArticle'), 'showFullArticleBtn fx-button secondary full-width',
+    addButton(chrome.i18n.getMessage('showFullArticle'), 'showFullArticleBtn button secondary full-width',
                 fetchPageContent, 'showArticlePreviewBtn');
 
     // Add keyboard shortcut
@@ -131,7 +131,7 @@ function addShowFullArticleBtn() {
 }
 
 function addShowArticlePreviewBtn(showPreviewFunction) {
-    addButton(chrome.i18n.getMessage('showArticlePreview'), 'showArticlePreviewBtn fx-button secondary full-width',
+    addButton(chrome.i18n.getMessage('showArticlePreview'), 'showArticlePreviewBtn button secondary full-width',
                 showPreviewFunction, 'showFullArticleBtn');
 
     // Add keyboard shortcut
