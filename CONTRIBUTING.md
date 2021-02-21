@@ -2,7 +2,7 @@
 
 ## Getting started
 
-Follow [this guide](http://minimul.com/developing-a-chrome-extension-with-yeoman.html) to build and debug the extension.
+Follow [this guide](https://minimul.com/developing-a-chrome-extension-with-yeoman.html) to build and debug the extension.
 
 In summary, install the required command line tools:
 
@@ -28,14 +28,14 @@ You can now [load the unpacked extension in Chrome](https://developer.chrome.com
 
 The Github repository uses a **linear** commit history.
  
-To simplify the contribution from external developers, the project moved away from the [GitFlow](http://nvie.com/posts/a-successful-git-branching-model/) branching strategy.
+To simplify the contribution from external developers, the project moved away from the [GitFlow](https://nvie.com/posts/a-successful-git-branching-model/) branching strategy.
 
 All the contributions should be submitted as pull requests to the master branch and must not contain any merge commit.
 
 
 ## Version numbers
 
-Version numbers follow the [Semantic Versioning](http://semver.org) and are managed by the owner of the project.
+Version numbers follow the [Semantic Versioning](https://semver.org) and are managed by the owner of the project.
 Please, do not increase the version numbers in your pull requests.
 
 

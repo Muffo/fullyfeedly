@@ -41,4 +41,4 @@ Thanks a lot to the following developers for their help and contributions:
 The text of the article is extracted using the web API provided by:
 
 * [Mercury](https://mercury.postlight.com/): **recommended**, free for non-commercial use, API key required
-* [Boilerpipe](http://boilerpipe-web.appspot.com/): free to use, limited quota
+* [Boilerpipe](https://boilerpipe-web.appspot.com/): free to use, limited quota
