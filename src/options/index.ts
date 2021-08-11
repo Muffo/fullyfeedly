@@ -1,5 +1,5 @@
 /// <reference types="jquery"/>
-import * as Mousetrap from 'mousetrap';
+import tinykeys from "tinykeys";
 import { browser } from 'webextension-polyfill-ts';
 
 import { FullyFeedlyOptions } from '../fully-feedly-options';
@@ -19,8 +19,10 @@ class OptionsScript {
             this.saveOptions();
         });
 
-        Mousetrap.bind('f f', () => {
-            this.onKeyboardShortcut();
+        tinykeys(window, {
+            'f f': () => {
+                this.onKeyboardShortcut();
+            }
         });
     }
 

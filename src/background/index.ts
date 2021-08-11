@@ -2,8 +2,8 @@ import { browser } from 'webextension-polyfill-ts';
 
 class BackgroundScript {
     /* Regex-pattern to check URLs against.
-   It matches URLs like: http[s]://[...]feedly.com[...] */
-    urlRegex = /^https?:\/\/(?:[^.]+\.)?feedly\.com/;
+    It matches URLs like: http[s]://[...]feedly.com[...] */
+//     public urlRegex: RegExp = /^https?:\/\/(?:[^.]+\.)?feedly\.com/;
 
     public init() {
         browser.runtime.onInstalled.addListener(this.installed);
@@ -28,10 +28,11 @@ class BackgroundScript {
     }
 
     public tabUpdated(tabId, changeInfo) {
+        const urlRegex: RegExp = /^https?:\/\/(?:[^.]+\.)?feedly\.com/;
         if (!changeInfo.url) {
             return;
         }
-        if (this.urlRegex.test(changeInfo.url)) {
+        if (urlRegex.test(changeInfo.url)) {
             browser.pageAction.show(tabId);
         } else {
             browser.pageAction.hide(tabId);
@@ -39,8 +40,9 @@ class BackgroundScript {
     }
 
     public pageAction(tab) {
+        const urlRegex: RegExp = /^https?:\/\/(?:[^.]+\.)?feedly\.com/;
         // ...check the URL of the active tab against our pattern and...
-        if (this.urlRegex.test(tab.url)) {
+        if (urlRegex.test(tab.url)) {
             // ...if it matches, send a message specifying a callback too
             browser.tabs
                 .sendMessage(tab.id, { text: 'extract_article' })

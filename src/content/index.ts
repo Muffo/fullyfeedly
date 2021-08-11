@@ -1,4 +1,4 @@
-import * as Mousetrap from 'mousetrap';
+import tinykeys from 'tinykeys';
 import { browser } from 'webextension-polyfill-ts';
 import * as DOMPurify from 'dompurify';
 
@@ -14,12 +14,30 @@ class ContentScript {
         extractionAPI: 'Mercury',
         enableShortcut: false
     };
+    private articlePreviewHtml: string = '';
 
     public init() {
         browser.runtime.onMessage.addListener(this.messageReceived);
         this.restoreOptions();
 
         this.setupMutationObserver();
+
+        tinykeys(window, {
+            'f f': () => {
+                if (this.options.enableShortcut) {
+                    if (
+                        document.querySelector('.showFullArticleBtn') !== null
+                    ) {
+                        this.fetchPageContent();
+                    } else if (
+                        document.querySelector('.showArticlePreviewBtn') !==
+                        null
+                    ) {
+                        this.getShowPreviewFunction(this.articlePreviewHtml)();
+                    }
+                }
+            }
+        });
     }
 
     public messageReceived(message) {
@@ -108,35 +126,21 @@ class ContentScript {
     public addShowFullArticleBtn() {
         this.addButton(
             browser.i18n.getMessage('showFullArticle'),
-            'button secondary full-width showFullArticleBtn',
+            'showFullArticleBtn EntryImpl__button EntryImpl__button--full LinkButton LinkButton--default LinkButton--secondary LinkButton--secondary--default LinkButton--normal EntryImpl__button EntryImpl__button--full',
             () => {
                 this.fetchPageContent();
             },
             'showArticlePreviewBtn'
         );
-
-        // Add keyboard shortcut
-        if (this.options.enableShortcut) {
-            Mousetrap.bind('f f', () => {
-                this.fetchPageContent();
-            });
-        }
     }
 
     public addShowArticlePreviewBtn(showPreviewFunction: () => void) {
         this.addButton(
             browser.i18n.getMessage('showArticlePreview'),
-            'button secondary full-width showArticlePreviewBtn',
+            'showArticlePreviewBtn EntryImpl__button EntryImpl__button--full LinkButton LinkButton--default LinkButton--secondary LinkButton--secondary--default LinkButton--normal EntryImpl__button EntryImpl__button--full',
             showPreviewFunction,
             'showFullArticleBtn'
         );
-
-        // Add keyboard shortcut
-        if (this.options.enableShortcut) {
-            Mousetrap.bind('f f', () => {
-                showPreviewFunction();
-            });
-        }
     }
 
     async fetchPageContent(): Promise<void> {
@@ -191,7 +195,7 @@ class ContentScript {
             }
 
             // Replace the preview of the article with the full text
-            const articlePreviewHTML = contentElement.innerHTML;
+            this.articlePreviewHtml = contentElement.innerHTML;
             contentElement.innerHTML = cleanArticleContent;
 
             // Clear image styles to fix formatting of images with class/style/width information in article markup
@@ -217,7 +221,7 @@ class ContentScript {
                 );
             }
 
-            this.addUndoButton(articlePreviewHTML);
+            this.addUndoButton(this.articlePreviewHtml);
         } catch (error) {
             new FailOverlay(error, overlay).showOverlay();
         }

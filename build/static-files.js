@@ -6,7 +6,7 @@ exports.htmlAssets = [
     'lib/browser-polyfill.js',
     'lib/jquery.min.js',
     'lib/bootstrap.min.js',
-    'lib/mousetrap.min.js',
+    // 'lib/tinykeys.js',
     'lib/iosOverlay.js',
     'lib/purify.min.js'
 ];
@@ -47,10 +47,10 @@ exports.copyPatterns = [
         from: 'node_modules/jquery/dist/jquery.min.js',
         to: 'lib/'
     },
-    {
-        from: 'node_modules/mousetrap/mousetrap.min.js',
-        to: 'lib/'
-    },
+    // {
+    //     from: 'node_modules/tinykeys/dist/tinykeys.js',
+    //     to: 'lib/'
+    // },
     {
         from: 'node_modules/ios-notification-overlay/js/iosOverlay.js',
         to: 'lib/'
