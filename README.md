@@ -1,6 +1,6 @@
 # FullyFeedly
 
-### Chrome extensions to read the full articles in Feedly.com
+## Chrome extensions to read the full articles in Feedly.com
 
 [![Chrome Web Store](https://developer.chrome.com/webstore/images/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chrome.google.com/webstore/detail/fullyfeedly/ikdncbjpcpkheefmnbicggciklkeebmp?hl=en)
 
